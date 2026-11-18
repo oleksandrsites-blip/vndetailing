@@ -709,12 +709,13 @@
   }
   @media (max-width:760px), (max-width:1100px) and (orientation:portrait){
     .rv-list{
-      display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;
+      display:flex;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;gap:12px;
       margin:0 calc(var(--gut) * -1);padding:0 var(--gut);scroll-padding:0 var(--gut);
       scrollbar-width:none;-webkit-overflow-scrolling:touch;
     }
     .rv-list::-webkit-scrollbar{display:none}
     .rv-card{flex:0 0 min(86%, 420px);scroll-snap-align:start;padding:24px 22px}
+    .js .rv-card.fd{opacity:1;transform:none;transition:none} /* у свайпі картки не «випливають» знизу */
     .rv-pull{font-size:21px}
     .rv-dots{display:flex;justify-content:center;gap:8px;margin-top:22px}
     .rv-dots button{
@@ -748,7 +749,13 @@
   }
   @keyframes fqpulse{0%{transform:scale(.5);opacity:1}100%{transform:scale(1.6);opacity:0}}
   .fq-note{font-size:14px;line-height:1.55;color:var(--grey);margin-bottom:20px}
-  .fq-acts{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px 22px}
+  .fq-acts{display:grid;grid-template-columns:1fr;gap:18px}
+  .fq-sub{display:flex;flex-wrap:wrap;gap:12px 28px}
+  .fq-l{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:600;letter-spacing:-.01em;color:#D8D8D4;transition:color .2s}
+  .fq-li{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:1px solid rgba(243,243,241,.2);transition:background .2s, color .2s, border-color .2s}
+  .fq-l:hover{color:var(--white)}
+  .fq-l:hover .fq-li{background:var(--white);color:var(--black);border-color:var(--white)}
+  .fq-l:focus-visible{outline:2px solid var(--white);outline-offset:4px;border-radius:4px}
   .btn-o{
     display:inline-flex;align-items:center;justify-content:center;gap:12px;
     padding:16px 20px;border-radius:6px;font-size:15px;font-weight:700;white-space:nowrap;
@@ -828,8 +835,7 @@
     .fq-ic{width:34px;height:34px}
     .fq-in{padding-right:0}
     .fq-in p{font-size:15px}
-    .fq-acts{grid-template-columns:1fr;justify-items:stretch}
-    .fq-acts .link{justify-self:center}
+    .fq-sub{justify-content:space-between}
   }
   @media (prefers-reduced-motion:reduce){
     .fq-a,.fq-in,.fq-ic,.fq-item,.fq-item::before{transition:none}
@@ -1245,9 +1251,11 @@
           <p class="fq-note" id="fqNote">{{#labels.reply_note}}{{labels.reply_note}}{{/labels.reply_note}}{{^labels.reply_note}}У робочий час відповідаємо в Telegram протягом 15 хвилин.{{/labels.reply_note}}</p>
           <div class="fq-acts">
             <a class="btn-o" href="{{contacts.telegram.url}}" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21.5 3.5 2.8 10.7c-.9.4-.9 1.6.1 1.9l4.6 1.5 1.8 5.6c.3.8 1.3 1 1.9.4l2.6-2.5 4.7 3.5c.7.5 1.7.1 1.9-.7l3-15.1c.2-1-.8-1.8-1.7-1.3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m8 14 9-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Написати в Telegram</a>
-            <a class="link" href="tel:{{contacts.phone_tel}}">{{contacts.phone}}</a>
-{{#contacts.map}}            <a class="link" href="{{url}}" target="_blank" rel="noopener">Маршрут до студії</a>
-{{/contacts.map}}          </div>
+            <div class="fq-sub">
+              <a class="fq-l" href="tel:{{contacts.phone_tel}}"><span class="fq-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 3.5h3.2l1.6 4.2-2.1 1.4a11.5 11.5 0 0 0 7.2 7.2l1.4-2.1 4.2 1.6V19a2 2 0 0 1-2 2A16.5 16.5 0 0 1 3 5.5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>{{contacts.phone}}</a>
+{{#contacts.map}}              <a class="fq-l" href="{{url}}" target="_blank" rel="noopener"><span class="fq-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.5" stroke="currentColor" stroke-width="1.6"/></svg></span>Маршрут до студії</a>
+{{/contacts.map}}            </div>
+          </div>
         </div>
       </div>
     </div>
