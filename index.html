@@ -116,7 +116,7 @@
   }
   h1{
     font-weight:800;
-    font-size:clamp(48px, min(6.9vw, calc(var(--vh, 1svh) * 10.6)), 148px);
+    font-size:clamp(48px, min(8vw, calc(var(--vh, 1svh) * 12.4)), 160px);
     line-height:1;
     letter-spacing:-.045em;
     margin-bottom:clamp(24px, calc(var(--vh, 1svh) * 4.4), 44px);
@@ -724,13 +724,16 @@
   }
 
   /* ================= БЛОК 7: часті питання ================= */
-  .fq{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.3fr);gap:clamp(40px, 6vw, 110px);align-items:start}
-  .fq-side{position:sticky;top:96px}
+  .fq{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.3fr);gap:clamp(40px, 6vw, 110px);align-items:stretch}
+  /* картка зліва закінчується на рівні останнього питання: фото забирає вільну висоту */
+  .fq-side{display:flex;flex-direction:column}
+  .fq-card{flex:1;display:flex;flex-direction:column}
   .fq-lead{font-size:16px;line-height:1.65;color:var(--grey);max-width:38ch;margin:22px 0 clamp(28px, calc(var(--vh, 1svh) * 4), 40px)}
 
   /* картка студії з живим статусом */
   .fq-card{border:1px solid var(--hair);border-radius:8px;overflow:hidden;background:var(--surface)}
-  .fq-ph{position:relative;aspect-ratio:16 / 8;overflow:hidden}
+  .fq-ph{position:relative;flex:1 1 0;min-height:140px;overflow:hidden}
+  .fq-ph img{position:absolute;inset:0;width:100%;height:100%}
   .fq-ph img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.1) brightness(.8)}
   .fq-ph::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg, var(--surface) 0%, rgba(19,20,23,0) 60%)}
   .fq-body{padding:4px clamp(20px, 2vw, 28px) clamp(20px, 2vw, 28px)}
@@ -814,6 +817,7 @@
     .fq-lead{order:1;margin:-12px 0 0}
     .fq-list{order:2}
     .fq-card{order:3;margin-top:8px}
+    .fq-ph{flex:none;aspect-ratio:16 / 8}
     .fq-item{padding:0 16px;margin:0 -16px}
     .fq-item::after{left:16px;right:16px}
     .fq-item::before{left:16px}
@@ -1877,7 +1881,7 @@
     if (open) {
       const left = today[1] - t;
       st.textContent = left <= 60 ? 'Зараз відкрито, ще ' + left + ' хв' : 'Зараз відкрито, до ' + today[3];
-      note.textContent = 'Майстер на місці: відповімо в Telegram протягом 15 хвилин.';
+      note.textContent = 'Студія працює: телефонуйте або пишіть у Telegram.';
     } else {
       // найближчий робочий день: сьогодні (якщо ще не відкрились), завтра або пізніше
       let k = today && t < today[0] ? 0 : 1;
@@ -1885,7 +1889,7 @@
       const next = H.week[(wd + k) % 7];
       const when = k === 0 || H.daily ? '' : k === 1 ? 'завтра ' : 'у ' + DAYS[(wd + k) % 7] + ' ';
       st.textContent = 'Зараз зачинено, відкриємось ' + when + 'о ' + next[2];
-      note.textContent = 'Напишіть зараз, і ми відповімо першими зранку.';
+      note.textContent = 'Напишіть зараз, і ми відповімо, щойно відкриємось.';
     }
   }
   upd(); setInterval(upd, 60000);
