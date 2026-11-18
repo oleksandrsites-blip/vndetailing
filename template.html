@@ -392,6 +392,7 @@
   .pr-facts{display:flex;gap:44px;padding:18px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);margin-bottom:20px}
   .pr-facts dt{font-size:13px;color:#C0C0BC;margin-bottom:4px}
   .pr-facts dd{font-size:18px;font-weight:600;letter-spacing:-.01em}
+  .pr-facts div:last-child dd{white-space:nowrap} /* «від 7 000 грн» не розриваємо */
   .pr-foot{display:flex;align-items:center;justify-content:space-between;gap:20px 32px;flex-wrap:wrap}
   .pr-tip{font-size:14px;line-height:1.55;color:#C6C6C2;max-width:40ch}
   .pr-tip b{color:var(--white);font-weight:600}
@@ -1201,7 +1202,7 @@
 <section class="sec" id="process" aria-labelledby="process-h">
   <div class="pr-head">
     <h2 class="h2 rv" id="process-h"><span class="ln"><span>5 простих кроків</span></span><span class="ln"><span class="soft">як ми працюємо</span></span></h2>
-    <p class="pr-lead fd" style="--d:.15s">Спочатку оцінюємо стан автомобіля, погоджуємо роботи, вартість і термін. До роботи приступаємо тільки після вашого підтвердження.</p>
+    <p class="pr-lead fd" style="--d:.15s">Спочатку дивимось авто й погоджуємо з вами роботи та вартість. Починаємо тільки після вашого «так».</p>
   </div>
   <ol class="st-row" id="stRow" aria-label="Кроки роботи">
 {{#steps}}    <li class="st" style="--d:{{@i|step:0.28,2}}s">

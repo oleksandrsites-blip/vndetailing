@@ -220,7 +220,9 @@ def _jsonld(data):
     names = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     week = h.get("week") or [[h["open"], h["close"]] if d in h["days"] else None for d in range(7)]
     hours = [{"@type": "OpeningHoursSpecification", "dayOfWeek": names[d], "opens": w[0], "closes": w[1]} for d, w in enumerate(week) if w]
-    prices = [int(re.sub(r"\D", "", p["price"])) for p in data.get("packages", []) if re.sub(r"\D", "", p.get("price", ""))]
+    # усі ціни «від»: і з карток послуг, і з додаткових
+    raw = [p.get("price", "") for p in data.get("packages", [])] + [p["solution"].get("price", "") for p in data.get("problems", [])]
+    prices = [int(re.sub(r"\D", "", x)) for x in raw if re.sub(r"\D", "", x)]
     biz = {
         "@type": "AutoRepair",
         "name": data["brand"],
