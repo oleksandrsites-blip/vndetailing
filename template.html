@@ -839,8 +839,9 @@
   /* ================= ФІНАЛ: оцінка за фото + контакти ================= */
   #estimate{overflow:hidden}
   #estimate::before{ /* м'яке світло від лампи над формою */
-    content:"";position:absolute;right:-10%;top:-6%;width:70%;height:90%;pointer-events:none;
-    background:radial-gradient(50% 50% at 60% 30%, rgba(var(--tube-rgb),.07), rgba(var(--tube-rgb),0) 70%);
+    content:"";position:absolute;right:-10%;top:0;width:70%;height:100%;pointer-events:none;
+    /* closest-side: світло згасає до нуля раніше, ніж доходить до краю секції, тож обрізу не видно */
+    background:radial-gradient(closest-side at 60% 42%, rgba(var(--tube-rgb),.07), rgba(var(--tube-rgb),0) 100%);
   }
   .es{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);gap:clamp(48px, 7vw, 130px);align-items:start}
   .es-lead{font-size:17px;line-height:1.65;color:var(--grey);max-width:40ch;margin:26px 0 clamp(40px, calc(var(--vh, 1svh) * 7), 72px)}
