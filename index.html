@@ -859,13 +859,6 @@
   .es-links a:hover .i{background:var(--white);color:var(--black);border-color:var(--white)}
   .es-links a:focus-visible{outline:2px solid var(--white);outline-offset:4px;border-radius:4px}
   .es-meta{font-size:14px;line-height:1.6;color:var(--grey)}
-  .es-soc{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:480px;margin:-4px 0 22px}
-  .es-soc-k{font-size:13px;color:var(--grey)}
-  .es-soc-i{display:flex;gap:10px}
-  .es-soc-i a{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid rgba(243,243,241,.22);color:#D8D8D4;transition:background .25s, color .25s, border-color .25s}
-  .es-soc-i a:hover{background:var(--white);color:var(--black);border-color:var(--white)}
-  .es-soc-i a:focus-visible{outline:2px solid var(--white);outline-offset:3px}
-  @media (max-width:760px){.es-soc{max-width:none}}
 
   .es-form{
     position:relative;background:linear-gradient(180deg, rgba(var(--tube-rgb),.035), rgba(var(--tube-rgb),0) 40%), var(--surface);
@@ -984,11 +977,15 @@
   .ft-row nav{display:flex;gap:24px;flex-wrap:wrap}
   .ft-soc{display:flex;align-items:center;gap:12px 24px;flex-wrap:wrap}
   .ft-row a{cursor:pointer}
+  .ft-soc{gap:8px}
   .ft-soc .soc{
-    display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:30px;
-    color:#D8D8D4;border:1px solid rgba(243,243,241,.18);transition:color .2s, border-color .2s, background .2s;
+    display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;
+    color:#B5B5B1;border:1px solid rgba(243,243,241,.14);
+    transition:color .25s, border-color .25s, box-shadow .25s;
   }
-  .ft-soc .soc:hover{color:var(--black);background:var(--white);border-color:var(--white)}
+  .ft-soc .soc:hover{color:var(--white);border-color:rgba(var(--tube-rgb),.75);box-shadow:0 0 18px rgba(var(--tube-rgb),.28)}
+  .ft-soc .soc:focus-visible{outline:2px solid var(--white);outline-offset:3px}
+  .ft-soc a:not(.soc){margin-left:14px}
   .ft-row nav a,.ft-soc a:not(.soc){color:#B5B5B1}
   .ft-row nav a:hover,.ft-soc a:not(.soc):hover{color:var(--white)}
   .ft-row a{transition:color .2s}
@@ -1012,7 +1009,7 @@
     .logo::after,.pk-note a::after,.ft-row a::after{content:"";position:absolute;inset:-12px -8px}
     .top-cta{padding-top:12px;padding-bottom:12px}
     .ft-row nav{gap:28px}
-    .ft-soc{gap:10px 16px}
+    .ft-soc{gap:10px}
   }
 
   /* ритм секцій на телефоні */
@@ -1029,7 +1026,8 @@
   .top-cta{min-height:44px}
   .nav a,.tel,.ft-row nav a,.ft-soc a{position:relative}
   .nav a::after,.tel::after,.ft-row nav a::after,.ft-soc a:not(.soc)::after{content:"";position:absolute;inset:-13px -6px}
-  .ft-soc .soc{min-height:44px}
+  .ft-soc .soc::after{display:none}
+  @media (max-width:1100px){.ft-soc .soc{width:44px;height:44px}}
   .ba-grip{width:44px}
   .ba-grip{margin-left:-22px}
   .rv-dots button::after{inset:-21px -9px}
@@ -1426,7 +1424,6 @@
         <li><a href="https://t.me/vn_detail" target="_blank" rel="noopener"><span class="k">Telegram</span><span class="v">@vn_detail</span><span class="i"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21.5 3.5 2.8 10.7c-.9.4-.9 1.6.1 1.9l4.6 1.5 1.8 5.6c.3.8 1.3 1 1.9.4l2.6-2.5 4.7 3.5c.7.5 1.7.1 1.9-.7l3-15.1c.2-1-.8-1.8-1.7-1.3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m8 14 9-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span></a></li>
         <li><a href="https://maps.app.goo.gl/Mph3zimyMnUPz95o8" target="_blank" rel="noopener"><span class="k">Адреса</span><span class="v">Батозька, 2у, ГСК «Зірка»</span><span class="i"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.5" stroke="currentColor" stroke-width="1.6"/></svg></span></a></li>
       </ul>
-      <div class="es-soc fd" style="--d:.28s"><span class="es-soc-k">Ми в соцмережах</span><div class="es-soc-i"><a href="https://www.instagram.com/vn_detail_studio/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></a><a href="https://www.tiktok.com/@vn.detail" target="_blank" rel="noopener" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13.5 3v11.2a3.3 3.3 0 1 1-3.3-3.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.5 3c.4 2.7 2.3 4.5 5.2 4.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a><a href="https://www.youtube.com/@Vndetail" target="_blank" rel="noopener" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="M10 9.4v5.2l4.5-2.6L10 9.4Z" fill="currentColor"/></svg></a><a href="https://www.facebook.com/vndetail" target="_blank" rel="noopener" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.2 21v-7.3h2.6l.4-3.1h-3V8.7c0-.9.3-1.5 1.5-1.5h1.6V4.4a20 20 0 0 0-2.4-.1c-2.4 0-4 1.4-4 4.1v2.2H8.3v3.1h2.6V21" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></a></div></div>
       <p class="es-meta fd" style="--d:.3s">Пн–Сб з 9:00 до 18:00, неділя вихідний.</p>
     </div>
 
@@ -1492,11 +1489,11 @@
       <a href="#faq">Питання</a>
     </nav>
     <div class="ft-soc">
-      <a class="soc" href="https://www.instagram.com/vn_detail_studio/" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg>Instagram</a>
-      <a class="soc" href="https://t.me/vn_detail" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21.5 3.5 2.8 10.7c-.9.4-.9 1.6.1 1.9l4.6 1.5 1.8 5.6c.3.8 1.3 1 1.9.4l2.6-2.5 4.7 3.5c.7.5 1.7.1 1.9-.7l3-15.1c.2-1-.8-1.8-1.7-1.3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Telegram</a>
-      <a class="soc" href="https://www.tiktok.com/@vn.detail" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13.5 3v11.2a3.3 3.3 0 1 1-3.3-3.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.5 3c.4 2.7 2.3 4.5 5.2 4.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>TikTok</a>
-      <a class="soc" href="https://www.youtube.com/@Vndetail" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="M10 9.4v5.2l4.5-2.6L10 9.4Z" fill="currentColor"/></svg>YouTube</a>
-      <a class="soc" href="https://www.facebook.com/vndetail" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.2 21v-7.3h2.6l.4-3.1h-3V8.7c0-.9.3-1.5 1.5-1.5h1.6V4.4a20 20 0 0 0-2.4-.1c-2.4 0-4 1.4-4 4.1v2.2H8.3v3.1h2.6V21" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>Facebook</a>
+      <a class="soc" href="https://www.instagram.com/vn_detail_studio/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></a>
+      <a class="soc" href="https://t.me/vn_detail" target="_blank" rel="noopener" aria-label="Telegram"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21.5 3.5 2.8 10.7c-.9.4-.9 1.6.1 1.9l4.6 1.5 1.8 5.6c.3.8 1.3 1 1.9.4l2.6-2.5 4.7 3.5c.7.5 1.7.1 1.9-.7l3-15.1c.2-1-.8-1.8-1.7-1.3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></a>
+      <a class="soc" href="https://www.tiktok.com/@vn.detail" target="_blank" rel="noopener" aria-label="TikTok"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13.5 3v11.2a3.3 3.3 0 1 1-3.3-3.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.5 3c.4 2.7 2.3 4.5 5.2 4.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+      <a class="soc" href="https://www.youtube.com/@Vndetail" target="_blank" rel="noopener" aria-label="YouTube"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="M10 9.4v5.2l4.5-2.6L10 9.4Z" fill="currentColor"/></svg></a>
+      <a class="soc" href="https://www.facebook.com/vndetail" target="_blank" rel="noopener" aria-label="Facebook"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.2 21v-7.3h2.6l.4-3.1h-3V8.7c0-.9.3-1.5 1.5-1.5h1.6V4.4a20 20 0 0 0-2.4-.1c-2.4 0-4 1.4-4 4.1v2.2H8.3v3.1h2.6V21" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></a>
       <a href="#top">Нагору</a>
     </div>
   </div>
