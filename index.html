@@ -1059,7 +1059,7 @@
   .logo-img{height:40px}
   @media (max-width:760px){.logo-img{height:30px}}
   h1 .tag{font-size:clamp(26px, min(3.3vw, calc(var(--vh, 1svh) * 5.4)), 60px);line-height:1.1;letter-spacing:-.035em;margin-top:.3em;max-width:15em}
-  h1 .tag > span{display:inline}
+  h1 .tag > span{display:inline-block} /* inline-block, щоб працювала анімація виїзду, як в інших рядках */
   .top-ic{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#C9C9C5;white-space:nowrap;text-shadow:0 1px 14px rgba(11,12,14,.8);transition:color .2s, background .2s, border-color .2s}
   .top-ic:hover{color:var(--white)}
   .top-ic.tg,.top-ic.route.ic{width:38px;height:38px;justify-content:center;border-radius:50%;border:1px solid rgba(243,243,241,.22);background:rgba(11,12,14,.35);color:#E2E2DE}
