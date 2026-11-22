@@ -392,7 +392,7 @@
   .pr-facts{display:flex;gap:44px;padding:18px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);margin-bottom:20px}
   .pr-facts dt{font-size:13px;color:#C0C0BC;margin-bottom:4px}
   .pr-facts dd{font-size:18px;font-weight:600;letter-spacing:-.01em}
-  .pr-facts div:last-child dd{white-space:nowrap} /* «від 7 000 грн» не розриваємо */
+  .pr-facts div:first-child dd{white-space:nowrap} /* «від 7 000 грн» не розриваємо */
   .pr-foot{display:flex;align-items:center;justify-content:space-between;gap:20px 32px;flex-wrap:wrap}
   .pr-tip{font-size:14px;line-height:1.55;color:#C6C6C2;max-width:40ch}
   .pr-tip b{color:var(--white);font-weight:600}
@@ -1056,6 +1056,42 @@
     .js h1 .ln > span{animation:none;transform:none}
     .js .top,.js .row{animation:none;opacity:1}
   }
+
+  /* ===== правки VN Detail: лого, заголовок, шапка, футер ===== */
+  .logo-img{height:40px}
+  @media (max-width:760px){.logo-img{height:30px}}
+  h1 .tag{font-size:clamp(26px, min(3.3vw, calc(var(--vh, 1svh) * 5.4)), 60px);line-height:1.1;letter-spacing:-.035em;margin-top:.3em;max-width:15em}
+  h1 .tag > span{display:inline}
+  .top-ic{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#C9C9C5;white-space:nowrap;text-shadow:0 1px 14px rgba(11,12,14,.8);transition:color .2s, background .2s, border-color .2s}
+  .top-ic:hover{color:var(--white)}
+  .top-ic.tg,.top-ic.route.ic{width:38px;height:38px;justify-content:center;border-radius:50%;border:1px solid rgba(243,243,241,.22);background:rgba(11,12,14,.35);color:#E2E2DE}
+  .top-ic.tg{margin-left:-26px}
+  .top-ic.tg:hover{background:var(--white);color:var(--black);border-color:var(--white)}
+  .top-ic:focus-visible{outline:2px solid var(--white);outline-offset:3px;border-radius:6px}
+  @media (max-width:1320px){
+    .nav{gap:22px}
+    .top-ic.route{width:38px;height:38px;justify-content:center;border-radius:50%;border:1px solid rgba(243,243,241,.22);background:rgba(11,12,14,.35);color:#E2E2DE}
+    .top-ic.route span{display:none}
+    .top-ic.route:hover{background:var(--white);color:var(--black);border-color:var(--white)}
+  }
+  @media (max-width:1100px){
+    .top-ic.route{margin-left:auto}
+    .top-ic.route ~ .tel{margin-left:0}
+    .top-ic.tg{margin-left:-2px}
+  }
+  @media (max-width:760px), (max-width:1100px) and (orientation:portrait){
+    .top-ic{display:none}
+    .top-ic.route ~ .tel{margin-left:auto}
+  }
+  .ft-row{align-items:flex-end}
+  .ft-row > .ft-brand,.ft-row > nav{padding-bottom:11px}
+  .ft-socw{display:flex;flex-direction:column;gap:10px}
+  .ft-socl{font-size:13px;color:var(--grey)}
+  @media (max-width:760px), (max-width:1100px) and (orientation:portrait){
+    .ft-row{align-items:flex-start}
+    .ft-row > .ft-brand,.ft-row > nav{padding-bottom:0}
+    .ft-socw{margin-top:8px}
+  }
 </style>
 <script type="application/ld+json">{{{_.jsonld}}}</script>
 </head>
@@ -1070,14 +1106,17 @@
       <a href="#results">До і після</a>
       <a href="#faq">Питання</a>
     </nav>
-    <a class="tel" href="tel:{{contacts.phone_tel}}" aria-label="Подзвонити: {{contacts.phone}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 3.5h3.2l1.6 4.2-2.1 1.4a11.5 11.5 0 0 0 7.2 7.2l1.4-2.1 4.2 1.6V19a2 2 0 0 1-2 2A16.5 16.5 0 0 1 3 5.5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span>{{contacts.phone}}</span></a>
+{{#contacts.map}}    <a class="top-ic route" href="{{url}}" target="_blank" rel="noopener" aria-label="Маршрут до студії"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.5" stroke="currentColor" stroke-width="1.6"/></svg><span>Маршрут до студії</span></a>
+{{/contacts.map}}    <a class="tel" href="tel:{{contacts.phone_tel}}" aria-label="Подзвонити: {{contacts.phone}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 3.5h3.2l1.6 4.2-2.1 1.4a11.5 11.5 0 0 0 7.2 7.2l1.4-2.1 4.2 1.6V19a2 2 0 0 1-2 2A16.5 16.5 0 0 1 3 5.5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span>{{contacts.phone}}</span></a>
+    <a class="top-ic tg" href="{{contacts.telegram.url}}" target="_blank" rel="noopener" aria-label="Написати в Telegram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21.5 3.5 2.8 10.7c-.9.4-.9 1.6.1 1.9l4.6 1.5 1.8 5.6c.3.8 1.3 1 1.9.4l2.6-2.5 4.7 3.5c.7.5 1.7.1 1.9-.7l3-15.1c.2-1-.8-1.8-1.7-1.3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m8 14 9-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
     <a class="top-cta" href="#estimate"><span class="full">Оцінити авто за фото</span><span class="short">Оцінити авто</span><svg width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="1.5" y="4" width="15" height="11" rx="2" stroke="currentColor" stroke-width="1.6"/><circle cx="9" cy="9.5" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M6 4l1.2-2h3.6L12 4" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></a>
   </header>
 
   <div class="copy">
     <h1>
 {{#hero.title}}      <span class="ln"><span{{#soft}} class="soft"{{/soft}}>{{{text}}}</span></span>
-{{/hero.title}}    </h1>
+{{/hero.title}}{{#hero.tagline}}      <span class="ln tag"><span class="soft">{{{hero.tagline}}}</span></span>
+{{/hero.tagline}}    </h1>
     <div class="row">
       <p class="lead">{{{hero.lead}}}</p>
       <div class="acts">
@@ -1130,7 +1169,7 @@
 {{#problems.0.solution}}          <p class="pr-for">Що зробимо</p>
           <h3>{{h}}</h3>
           <p class="pr-text">{{t}}</p>
-          <dl class="pr-facts"><div><dt>{{#time_k}}{{time_k}}{{/time_k}}{{^time_k}}Скільки часу{{/time_k}}</dt><dd>{{time}}</dd></div><div><dt>Вартість</dt><dd>{{price}}</dd></div></dl>
+          <dl class="pr-facts"><div><dt>Вартість</dt><dd>{{price}}</dd></div><div><dt>{{#time_k}}{{time_k}}{{/time_k}}{{^time_k}}Скільки часу{{/time_k}}</dt><dd>{{time}}</dd></div></dl>
           <div class="pr-foot"><p class="pr-tip">{{{tip}}}</p><a class="link" href="#estimate">Оцінити своє авто за фото</a></div>
 {{/problems.0.solution}}        </div>
         <span class="pr-dark" aria-hidden="true"></span>
@@ -1347,14 +1386,13 @@
       <a href="#results">До і після</a>
       <a href="#faq">Питання</a>
     </nav>
-    <div class="ft-soc">
+    <div class="ft-socw"><span class="ft-socl">Наші соціальні мережі</span><div class="ft-soc">
 {{#contacts.instagram}}      <a class="soc" href="{{url}}" target="_blank" rel="noopener" aria-label="Instagram"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></a>
-{{/contacts.instagram}}      <a class="soc" href="{{contacts.telegram.url}}" target="_blank" rel="noopener" aria-label="Telegram"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21.5 3.5 2.8 10.7c-.9.4-.9 1.6.1 1.9l4.6 1.5 1.8 5.6c.3.8 1.3 1 1.9.4l2.6-2.5 4.7 3.5c.7.5 1.7.1 1.9-.7l3-15.1c.2-1-.8-1.8-1.7-1.3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></a>
-{{#contacts.tiktok}}      <a class="soc" href="{{url}}" target="_blank" rel="noopener" aria-label="TikTok"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13.5 3v11.2a3.3 3.3 0 1 1-3.3-3.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.5 3c.4 2.7 2.3 4.5 5.2 4.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+{{/contacts.instagram}}{{#contacts.tiktok}}      <a class="soc" href="{{url}}" target="_blank" rel="noopener" aria-label="TikTok"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13.5 3v11.2a3.3 3.3 0 1 1-3.3-3.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.5 3c.4 2.7 2.3 4.5 5.2 4.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
 {{/contacts.tiktok}}{{#contacts.youtube}}      <a class="soc" href="{{url}}" target="_blank" rel="noopener" aria-label="YouTube"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="M10 9.4v5.2l4.5-2.6L10 9.4Z" fill="currentColor"/></svg></a>
 {{/contacts.youtube}}{{#contacts.facebook}}      <a class="soc" href="{{url}}" target="_blank" rel="noopener" aria-label="Facebook"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.2 21v-7.3h2.6l.4-3.1h-3V8.7c0-.9.3-1.5 1.5-1.5h1.6V4.4a20 20 0 0 0-2.4-.1c-2.4 0-4 1.4-4 4.1v2.2H8.3v3.1h2.6V21" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></a>
 {{/contacts.facebook}}      <a href="#top">Нагору</a>
-    </div>
+    </div></div>
   </div>
   <span class="ft-mark" aria-hidden="true">{{brand}}</span>
 {{#footer.note}}  <p class="ft-note">{{footer.note}}</p>
@@ -1457,7 +1495,7 @@
     solT = setTimeout(() => {
       sol.querySelector('h3').textContent = d.h;
       sol.querySelector('.pr-text').textContent = d.t;
-      const dd = sol.querySelectorAll('.pr-facts dd'); sol.querySelector('.pr-facts dt').textContent = d.time_k || 'Скільки часу'; dd[0].textContent = d.time; dd[1].textContent = d.price;
+      const dd = sol.querySelectorAll('.pr-facts dd'); sol.querySelectorAll('.pr-facts dt')[1].textContent = d.time_k || 'Скільки часу'; dd[0].textContent = d.price; dd[1].textContent = d.time;
       sol.querySelector('.pr-tip').innerHTML = d.tip;
       sol.classList.remove('out');
     }, reduce ? 0 : 220);
