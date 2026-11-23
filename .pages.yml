@@ -54,9 +54,9 @@ content:
             fields:
               - { name: h, label: "Назва послуги", type: string, required: true }
               - { name: t, label: "Що робимо", type: text }
-              - { name: price, label: "Ціна", type: string, description: "Наприклад: від 7 000 грн" }
               - { name: time_k, label: "Підпис другого рядка", type: string, description: "Наприклад: Скільки часу, Додатково" }
               - { name: time, label: "Значення другого рядка", type: string, description: "Наприклад: 1–2 дні" }
+              - { name: price, label: "Ціна", type: string, description: "Наприклад: від 7 000 грн" }
               - { name: tip, label: "Порада", type: text, description: "Щоб виділити слова жирним, візьміть їх у **дві зірочки**" }
       - name: packages
         label: Деталі (окремі послуги з фото)
