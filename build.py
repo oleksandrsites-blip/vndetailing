@@ -39,6 +39,106 @@ def _local(photo, widths, ext):
     return found
 
 
+# ---------- дані з адмінки (Pages CMS) ----------
+# У JSON фото лежать як шляхи до файлів (так CMS показує прев'ю):
+#   images/photos/photo-vn-polish-1200.webp  -> id "photo-vn-polish" (уся лінійка ширин)
+#   images/uploads/моє-фото.jpg              -> id "photo-up-<slug>", якщо tools/optimize-uploads.py
+#                                               уже зробив копії; інакше файл як є
+UPLOADS = ROOT / "images" / "uploads"
+LADDER_RE = re.compile(r"^images/photos/(photo-[\w-]+?)-\d+\.(?:webp|avif)$")
+
+
+def up_id(path):
+    """Стабільний id для завантаженого фото: photo-up-<латиниця/цифри> + короткий хеш шляху."""
+    import hashlib
+    stem = re.sub(r"[^a-z0-9]+", "-", Path(path).stem.lower()).strip("-")[:40]
+    return f"photo-up-{stem + '-' if stem else ''}{hashlib.md5(Path(path).name.encode()).hexdigest()[:6]}"
+
+
+def norm_photo(photo):
+    if not isinstance(photo, str) or not photo:
+        return photo
+    p = photo.strip().lstrip("/")
+    m = LADDER_RE.match(p)
+    if m:
+        return m.group(1)
+    if p.startswith("images/uploads/"):
+        pid = up_id(p)
+        return pid if list(LOCAL.glob(pid + "-*.webp")) else p
+    return photo
+
+
+NB_WORDS = r"(?:і|й|у|в|з|із|зі|та|а|до|за|на|не|ні|по|від|для|як|що|чи|бо|о|об)"
+
+
+def typo(text, tag="b"):
+    """Текст з адмінки -> HTML: **жирне**, нерозривні пробіли після коротких слів і в цінах."""
+    if not isinstance(text, str):
+        return text
+    t = re.sub(r"\*\*(.+?)\*\*", rf"<{tag}>\1</{tag}>", text)
+    t = re.sub(rf"(?i)(?<![\w-])({NB_WORDS}) (?=\S)", "\\1\u00a0", t)
+    t = re.sub(r"(\d) (?=\d{3}\b)", "\\1\u00a0", t)
+    t = re.sub(r"(\d) (?=грн)", "\\1\u00a0", t)
+    t = re.sub(r" (—|–)", "\u00a0\\1", t)
+    return t
+
+
+def from_cms(data):
+    """Нормалізує дані, які клієнт міг змінити в адмінці: фото, типографіка, значення за замовчуванням."""
+    def walk(x):
+        if isinstance(x, dict):
+            for k, v in x.items():
+                if k == "photo" or k.endswith("_img"):
+                    x[k] = norm_photo(v)
+                else:
+                    walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+    walk(data)
+    for i, pr in enumerate(data.get("problems", [])):
+        pr.setdefault("pos", "50% 50%")
+        pr["title"], pr["desc"] = typo(pr.get("title", "")), typo(pr.get("desc", ""))
+        sol = pr.setdefault("solution", {})
+        for k in ("h", "t", "time", "price"):
+            sol[k] = typo(sol.get(k, ""))
+        sol["tip"] = typo(sol.get("tip", ""), "b")
+    for pk in data.get("packages", []):
+        pk.setdefault("pos", "50% 50%")
+        pk["cta"] = pk.get("cta") or "Записатись"
+        pk["goal"] = typo(pk.get("goal", ""))
+        pk["items"] = [typo(x) for x in pk.get("items") or []]
+        pk["price"] = typo(pk.get("price", ""))
+    used = set()
+    for i, r in enumerate(data.get("results", [])):
+        kind = r.get("kind") or f"r{i}"
+        while kind in used:
+            kind += "x"
+        used.add(kind)
+        r["kind"] = kind
+        r.setdefault("pos", "50% 50%")
+        r.setdefault("mpos", r["pos"])
+        r["before"], r["after"] = typo(r.get("before", "")), typo(r.get("after", ""))
+    rv = data.get("reviews", {})
+    for it in rv.get("items", []):
+        it.setdefault("meta", [{"k": "Джерело", "v": "Google Maps"}])
+        it["text"] = typo(it.get("text", ""))
+    for q in data.get("faq", []):
+        q["q"], q["a"] = typo(q.get("q", "")), typo(q.get("a", ""), "strong")
+        q["chips"] = [re.sub(r"</b>\s+", "</b>", typo(c)) for c in q.get("chips") or [] if c]
+    h = data.get("hours", {})
+    if h.get("days") is not None:
+        h["days"] = sorted({int(x) for x in h["days"] if str(x).strip().isdigit()})
+    c = data.get("contacts", {})
+    if c.get("phone"):
+        digits = re.sub(r"\D", "", c["phone"])
+        c["phone_tel"] = "+38" + digits[-10:] if len(digits) >= 10 else c.get("phone_tel", "")
+    tg = c.get("telegram")
+    if isinstance(tg, dict) and tg.get("url"):
+        tg["handle"] = "@" + tg["url"].rstrip("/").rsplit("/", 1)[-1]
+    return data
+
+
 def _img_args(arg):
     parts = [p for p in arg.split(";") if p]
     fit = "nofit" not in parts
@@ -186,8 +286,33 @@ def _week(hours):
 def _pairs(data, client_dir):
     """results[].pair = "images/before-after/<категорія>": шукаємо before/after.webp (або jpg/png)."""
     for r in data.get("results", []):
+        if r.get("before_img") and r.get("after_img"):
+            found = {}
+            for side in ("before", "after"):
+                ref = r[side + "_img"]
+                if _unsplash(ref):  # завантажене з адмінки й оптимізоване
+                    local = _local(ref, [800, 1200, 1600], "webp")
+                    if local:
+                        found[side] = local[-1][1]
+                        found[side + "_set"] = ", ".join(f"{p} {w}w" for w, p in local)
+                        continue
+                    ref = ""
+                ref = ref.lstrip("/")
+                if ref and (ROOT / ref).exists():
+                    small = (ROOT / ref).with_name(Path(ref).stem + "-800.webp")
+                    found[side] = ref
+                    found[side + "_set"] = f"{ref} 1600w" + (f", {Path(ref).parent}/{small.name} 800w" if small.exists() else "")
+                    USED.add(ref)
+            if "before" in found and "after" in found:
+                r["real"] = found
+            else:
+                r["_drop"] = True  # пара з адмінки без обох фото — не показуємо порожню вкладку
+                print(f"увага: «{r.get('label')}» — немає фото до/після, вкладку пропущено")
+            continue
         folder = r.get("pair")
         if not folder:
+            r["_drop"] = True
+            print(f"увага: «{r.get('label')}» — немає фото до/після, вкладку пропущено")
             continue
         found = {}
         for side in ("before", "after"):
@@ -278,7 +403,9 @@ def main():
 
     client = Path(args.client)
     data = json.loads(client.read_text(encoding="utf-8"))
+    data = from_cms(data)
     _pairs(data, client.with_suffix(""))
+    data["results"] = [r for r in data.get("results", []) if not r.get("_drop")]
     data = derive(data)
     page = render(parse((ROOT / "template.html").read_text(encoding="utf-8")), [data])
 

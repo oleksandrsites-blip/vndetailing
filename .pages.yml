@@ -1,0 +1,211 @@
+# Адмінка сайту (Pages CMS, app.pagescms.org).
+# Клієнт редагує clients/vndetail.json; після збереження Cloudflare сам перезбирає сайт (tools/cf-build.sh).
+# Поля з hidden: true клієнт не бачить, але вони зберігаються (фокус фото, службові id).
+
+settings:
+  content:
+    merge: true   # не видаляти з JSON те, чого немає в цьому конфігу (головний екран, SEO, підписи)
+  commit:
+    templates:
+      update: "Адмінка: оновлено {filename}"
+      create: "Адмінка: додано {filename}"
+      delete: "Адмінка: видалено {filename}"
+
+media:
+  - name: photos
+    label: Фото
+    input: images/uploads
+    output: /images/uploads
+    rename: safe
+    extensions: [jpg, jpeg, png, webp]
+
+components:
+  photo:
+    type: image
+    label: Фото
+    description: "Горизонтальне фото, бажано від 1600 px завширшки. Сайт сам його стисне."
+    options:
+      media: photos
+  pos:
+    type: string
+    hidden: true
+
+content:
+  # ---------- Послуги ----------
+  - name: services
+    label: Послуги та ціни
+    type: file
+    path: clients/vndetail.json
+    format: json
+    fields:
+      - name: problems
+        label: Основні послуги (блок «Що болить»)
+        description: "6 карток. Ліворуч — проблема клієнта, праворуч — ваша послуга, ціна й порада."
+        type: object
+        list: { min: 6, max: 6 }
+        fields:
+          - { name: title, label: "Проблема (заголовок)", type: string, required: true }
+          - { name: desc, label: "Проблема (опис)", type: text }
+          - { name: photo, component: photo }
+          - { name: pos, component: pos }
+          - name: solution
+            label: Послуга
+            type: object
+            fields:
+              - { name: h, label: "Назва послуги", type: string, required: true }
+              - { name: t, label: "Що робимо", type: text }
+              - { name: price, label: "Ціна", type: string, description: "Наприклад: від 7 000 грн" }
+              - { name: time_k, label: "Підпис другого рядка", type: string, description: "Наприклад: Скільки часу, Додатково" }
+              - { name: time, label: "Значення другого рядка", type: string, description: "Наприклад: 1–2 дні" }
+              - { name: tip, label: "Порада", type: text, description: "Щоб виділити слова жирним, візьміть їх у **дві зірочки**" }
+      - name: packages
+        label: Деталі (окремі послуги з фото)
+        description: "4 картки під основними послугами."
+        type: object
+        list: { min: 4, max: 4 }
+        fields:
+          - { name: name, label: "Назва", type: string, required: true }
+          - { name: goal, label: "Підзаголовок", type: string }
+          - { name: items, label: "Переваги (короткі пункти)", type: string, list: { max: 4 } }
+          - { name: price, label: "Ціна, грн", type: string, description: "Тільки число, наприклад 2 000. Порожньо — ціну не показуємо." }
+          - { name: cta, label: "Текст кнопки", type: string, description: "Записатись або Дізнатись ціну" }
+          - { name: photo, component: photo }
+          - { name: pos, component: pos }
+
+  # ---------- До / після ----------
+  - name: results
+    label: Фото до / після
+    type: file
+    path: clients/vndetail.json
+    format: json
+    fields:
+      - name: results
+        label: Роботи до / після
+        description: "Кожна робота — окрема вкладка на сайті. Обидва фото краще знімати з одного ракурсу."
+        type: object
+        list: { min: 1, max: 6 }
+        fields:
+          - { name: label, label: "Назва вкладки", type: string, required: true, description: "Коротко: Відновлення фар, Хімчистка" }
+          - { name: before_img, label: "Фото ДО", type: image, options: { media: photos } }
+          - { name: after_img, label: "Фото ПІСЛЯ", type: image, options: { media: photos } }
+          - { name: before, label: "Підпис до фото ДО", type: string }
+          - { name: after, label: "Підпис до фото ПІСЛЯ", type: string }
+          - { name: kind, type: string, hidden: true }
+          - { name: pos, component: pos }
+          - { name: mpos, component: pos }
+
+  # ---------- Відгуки ----------
+  - name: reviews
+    label: Відгуки
+    type: file
+    path: clients/vndetail.json
+    format: json
+    fields:
+      - name: reviews
+        label: Відгуки
+        type: object
+        fields:
+          - { name: lead, type: string, hidden: true }
+          - name: items
+            label: Відгуки клієнтів
+            type: object
+            list: { min: 1, max: 10 }
+            fields:
+              - { name: name, label: "Ім'я", type: string, required: true }
+              - { name: pull, label: "Головна фраза (великим шрифтом)", type: string }
+              - { name: text, label: "Текст відгуку", type: text }
+              - name: meta
+                type: object
+                hidden: true
+                list: true
+                fields:
+                  - { name: k, type: string }
+                  - { name: v, type: string }
+
+  # ---------- Питання ----------
+  - name: faq
+    label: Питання й відповіді
+    type: file
+    path: clients/vndetail.json
+    format: json
+    fields:
+      - name: faq
+        label: Питання
+        type: object
+        list: { min: 1, max: 10 }
+        fields:
+          - { name: q, label: "Питання", type: string, required: true }
+          - { name: a, label: "Відповідь", type: text, description: "Щоб виділити слова жирним, візьміть їх у **дві зірочки**" }
+          - { name: chips, label: "Плашки під відповіддю", type: string, list: { max: 4 }, description: "Короткі мітки, наприклад: **Фари** від 1 200 грн" }
+
+  # ---------- Контакти ----------
+  - name: contacts
+    label: Контакти та графік
+    type: file
+    path: clients/vndetail.json
+    format: json
+    fields:
+      - name: contacts
+        label: Контакти
+        type: object
+        fields:
+          - { name: phone, label: "Телефон", type: string, required: true, description: "Як показувати на сайті: 068 550 33 44" }
+          - { name: phone_tel, type: string, hidden: true }
+          - { name: street, label: "Адреса", type: string }
+          - { name: address_line, label: "Графік (текстом, у блоці контактів)", type: string }
+          - name: map
+            label: Карта
+            type: object
+            fields:
+              - { name: url, label: "Посилання на Google Maps", type: string }
+              - { name: label, label: "Підпис посилання", type: string }
+          - name: telegram
+            label: Telegram
+            type: object
+            fields:
+              - { name: url, label: "Посилання", type: string, description: "https://t.me/..." }
+              - { name: handle, type: string, hidden: true }
+          - name: instagram
+            label: Instagram
+            type: object
+            fields:
+              - { name: url, label: "Посилання", type: string }
+              - { name: handle, type: string, hidden: true }
+          - name: tiktok
+            label: TikTok
+            type: object
+            fields:
+              - { name: url, label: "Посилання", type: string }
+              - { name: handle, type: string, hidden: true }
+          - name: youtube
+            label: YouTube
+            type: object
+            fields:
+              - { name: url, label: "Посилання", type: string }
+              - { name: handle, type: string, hidden: true }
+          - name: facebook
+            label: Facebook
+            type: object
+            fields:
+              - { name: url, label: "Посилання", type: string }
+              - { name: handle, type: string, hidden: true }
+      - name: hours
+        label: Години роботи (для статусу «зараз відкрито»)
+        type: object
+        fields:
+          - { name: label, label: "Графік текстом", type: string, description: "Наприклад: Працюємо пн–сб з 9:00 до 18:00" }
+          - { name: open, label: "Відкриваємось", type: string, description: "Формат 09:00" }
+          - { name: close, label: "Зачиняємось", type: string, description: "Формат 18:00" }
+          - name: days
+            label: Робочі дні
+            type: select
+            options:
+              multiple: true
+              values:
+                - { name: 1, label: Понеділок }
+                - { name: 2, label: Вівторок }
+                - { name: 3, label: Середа }
+                - { name: 4, label: Четвер }
+                - { name: 5, label: "П'ятниця" }
+                - { name: 6, label: Субота }
+                - { name: 0, label: Неділя }
