@@ -1094,6 +1094,61 @@
     .ft-row > .ft-brand,.ft-row > nav{padding-bottom:0}
     .ft-socw{margin-top:8px}
   }
+
+  /* ---------- галерея: кнопка на фото + перегляд на весь екран ---------- */
+  .zoom{
+    position:absolute;top:14px;right:14px;z-index:6;width:40px;height:40px;padding:0;
+    display:grid;place-items:center;border-radius:50%;cursor:pointer;color:var(--white);
+    background:rgba(11,12,14,.55);border:1px solid var(--hair);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    transition:border-color .2s,background .2s,opacity .4s;
+  }
+  .zoom:hover{border-color:rgba(var(--tube-rgb),.8);background:rgba(11,12,14,.75)}
+  .zoom:focus-visible{outline:2px solid var(--tube);outline-offset:2px}
+  .pk-ph,.fq-ph{cursor:zoom-in}
+  .js .pr-stage:not(.lit) .zoom,.js .ba:not(.lit) .zoom{opacity:0}
+  .ba:has(.ba-scene.on:not(.real)) .zoom{display:none}
+  @media (max-width:760px){.zoom{top:12px;right:12px;width:38px;height:38px}}
+
+  html.lb-lock{overflow:hidden}
+  .lb{
+    position:fixed;inset:0;z-index:100;display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;
+    background:rgba(8,9,11,.97);color:var(--white);opacity:0;transition:opacity .25s ease;
+  }
+  .lb.open{opacity:1}
+  .lb[hidden]{display:none}
+  .lb-top{display:flex;align-items:center;justify-content:space-between;padding:14px var(--gut) 10px}
+  .lb-n{font-size:14px;font-weight:600;letter-spacing:.06em;color:var(--grey);font-variant-numeric:tabular-nums}
+  .lb-x,.lb-nav{
+    width:46px;height:46px;padding:0;display:grid;place-items:center;border-radius:50%;cursor:pointer;
+    color:var(--white);background:rgba(243,243,241,.06);border:1px solid var(--hair);transition:border-color .2s,background .2s;
+  }
+  .lb-x:hover,.lb-nav:hover{border-color:rgba(var(--tube-rgb),.8);background:rgba(243,243,241,.1)}
+  .lb-x:focus-visible,.lb-nav:focus-visible,.lb-th:focus-visible{outline:2px solid var(--tube);outline-offset:2px}
+  .lb-stage{position:relative;display:grid;place-items:center;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;padding:0 calc(var(--gut) + 64px)}
+  .lb-img{max-width:100%;max-height:100%;object-fit:contain;border-radius:4px;transition:opacity .2s ease;-webkit-user-drag:none}
+  .lb-img.ld{opacity:0}
+  .lb-stage.drag .lb-img{transition:none}
+  .lb-nav{position:absolute;top:50%;margin-top:-23px;background:rgba(11,12,14,.6)}
+  .lb-nav.prev{left:var(--gut)}
+  .lb-nav.next{right:var(--gut)}
+  .lb-cap{margin:0;padding:14px var(--gut) 4px;text-align:center;font-size:15px;font-weight:600;min-height:1.4em}
+  .lb-thumbs{display:flex;gap:8px;overflow-x:auto;padding:12px var(--gut) 18px;scrollbar-width:none;justify-content:safe center}
+  .lb-thumbs::-webkit-scrollbar{display:none}
+  .lb-th{flex:none;width:76px;height:54px;padding:0;border:0;border-radius:4px;overflow:hidden;cursor:pointer;background:var(--surface);opacity:.42;transition:opacity .2s;outline:2px solid transparent;outline-offset:-2px}
+  .lb-th:hover{opacity:.8}
+  .lb-th[aria-current="true"]{opacity:1;outline-color:var(--tube)}
+  .lb-th img{width:100%;height:100%;object-fit:cover;display:block}
+  @media (max-width:760px){
+    .lb-stage{padding:0}
+    .lb-img{border-radius:0}
+    .lb-nav{width:40px;height:40px;margin-top:-20px}
+    .lb-nav.prev{left:10px}
+    .lb-nav.next{right:10px}
+    .lb-th{width:58px;height:42px}
+    .lb-thumbs{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
+  }
+  @media (prefers-reduced-motion:reduce){.lb,.lb-img{transition:none}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "AutoRepair", "name": "VN Detail", "description": "Детейлінг-студія VN Detail у Вінниці: полірування кузова, хімчистка салону, відновлення фар, передпродажна підготовка. Одне авто в роботі. Оцінка за фото.", "telephone": "+380685503344", "address": {"@type": "PostalAddress", "addressLocality": "Вінниця", "addressCountry": "UA", "streetAddress": "вул. Батозька, 2у (територія ГСК «Зірка»)"}, "areaServed": "Вінниця", "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "09:00", "closes": "18:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday", "opens": "09:00", "closes": "18:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Wednesday", "opens": "09:00", "closes": "18:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "09:00", "closes": "18:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "09:00", "closes": "18:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "18:00"}], "sameAs": ["https://t.me/vn_detail", "https://www.instagram.com/vn_detail_studio/", "https://www.tiktok.com/@vn.detail", "https://www.youtube.com/@Vndetail", "https://www.facebook.com/vndetail"], "priceRange": "1000–12000 грн", "@id": "https://vndetailing.pages.dev/#business", "url": "https://vndetailing.pages.dev/", "image": "https://vndetailing.pages.dev/images/brand/og.jpg", "logo": "https://vndetailing.pages.dev/images/brand/apple-touch-icon.png"}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Скільки коштує детейлінг?", "acceptedAnswer": {"@type": "Answer", "text": "Ціни на сайті стартові. Точну вартість назвемо, коли побачимо авто: за фото або на огляді."}}, {"@type": "Question", "name": "Скільки авто у вас у роботі одночасно?", "acceptedAnswer": {"@type": "Answer", "text": "Одне. Поки ваше авто в боксі, уся увага тільки йому: майстер не перемикається між машинами."}}, {"@type": "Question", "name": "Чи можна поєднати кілька послуг?", "acceptedAnswer": {"@type": "Answer", "text": "Так. Передпродажна підготовка якраз і є комплексом: хімчистка, полірування, відновлення фар, мийка двигуна. На комплекс діє знижка."}}, {"@type": "Question", "name": "Що таке озонація салону?", "acceptedAnswer": {"@type": "Answer", "text": "Антимікробна обробка повітря в авто. Озон знищує бактерії й прибирає запахи, а не маскує їх. Додаємо як опцію до хімчистки."}}, {"@type": "Question", "name": "Де ви і коли працюєте?", "acceptedAnswer": {"@type": "Answer", "text": "Вінниця, вул. Батозька, 2у, територія ГСК «Зірка». Працюємо з понеділка по суботу, 9:00–18:00, неділя вихідний."}}]}]}</script>
 </head>
@@ -1199,13 +1254,14 @@
     <div class="pr-home" id="prHome">
       <div class="pr-stage fd" id="prStage" role="region" aria-labelledby="pr-btn-0" style="--d:.1s">
         <div class="pr-photos">
-        <div class="pr-ph on" data-i="0"><picture><source type="image/avif" srcset="images/photos/photo-vn-polish-480.avif 480w, images/photos/photo-vn-polish-800.avif 800w, images/photos/photo-vn-polish-1200.avif 1200w, images/photos/photo-vn-polish-1600.avif 1600w" sizes="(max-width:760px) 100vw, 52vw"><img src="images/photos/photo-vn-polish-800.webp" srcset="images/photos/photo-vn-polish-480.webp 480w, images/photos/photo-vn-polish-800.webp 800w, images/photos/photo-vn-polish-1200.webp 1200w, images/photos/photo-vn-polish-1600.webp 1600w" sizes="(max-width:760px) 100vw, 52vw" alt="Полірування кузова: Кузов втратив блиск" style="object-position:50% 45%" loading="lazy" decoding="async"></picture></div>
-        <div class="pr-ph" data-i="1"><picture><source type="image/avif" srcset="images/photos/photo-vn-interior-480.avif 480w, images/photos/photo-vn-interior-800.avif 800w, images/photos/photo-vn-interior-1200.avif 1200w" sizes="(max-width:760px) 100vw, 52vw"><img src="images/photos/photo-vn-interior-800.webp" srcset="images/photos/photo-vn-interior-480.webp 480w, images/photos/photo-vn-interior-800.webp 800w, images/photos/photo-vn-interior-1200.webp 1200w" sizes="(max-width:760px) 100vw, 52vw" alt="Хімчистка салону: Салон брудний або з запахом" style="object-position:50% 55%" loading="lazy" decoding="async"></picture></div>
-        <div class="pr-ph" data-i="2"><picture><source type="image/avif" srcset="images/photos/photo-vn-presale-480.avif 480w, images/photos/photo-vn-presale-800.avif 800w, images/photos/photo-vn-presale-1200.avif 1200w, images/photos/photo-vn-presale-1600.avif 1600w" sizes="(max-width:760px) 100vw, 52vw"><img src="images/photos/photo-vn-presale-800.webp" srcset="images/photos/photo-vn-presale-480.webp 480w, images/photos/photo-vn-presale-800.webp 800w, images/photos/photo-vn-presale-1200.webp 1200w, images/photos/photo-vn-presale-1600.webp 1600w" sizes="(max-width:760px) 100vw, 52vw" alt="Передпродажна підготовка: Готуєте авто до продажу" style="object-position:50% 60%" loading="lazy" decoding="async"></picture></div>
-        <div class="pr-ph" data-i="3"><picture><source type="image/avif" srcset="images/photos/photo-vn-lights-480.avif 480w, images/photos/photo-vn-lights-800.avif 800w, images/photos/photo-vn-lights-1200.avif 1200w" sizes="(max-width:760px) 100vw, 52vw"><img src="images/photos/photo-vn-lights-800.webp" srcset="images/photos/photo-vn-lights-480.webp 480w, images/photos/photo-vn-lights-800.webp 800w, images/photos/photo-vn-lights-1200.webp 1200w" sizes="(max-width:760px) 100vw, 52vw" alt="Відновлення фар: Фари помутніли" style="object-position:50% 50%" loading="lazy" decoding="async"></picture></div>
-        <div class="pr-ph" data-i="4"><picture><source type="image/avif" srcset="images/photos/photo-vn-glass-480.avif 480w, images/photos/photo-vn-glass-800.avif 800w, images/photos/photo-vn-glass-1200.avif 1200w, images/photos/photo-vn-glass-1600.avif 1600w" sizes="(max-width:760px) 100vw, 52vw"><img src="images/photos/photo-vn-glass-800.webp" srcset="images/photos/photo-vn-glass-480.webp 480w, images/photos/photo-vn-glass-800.webp 800w, images/photos/photo-vn-glass-1200.webp 1200w, images/photos/photo-vn-glass-1600.webp 1600w" sizes="(max-width:760px) 100vw, 52vw" alt="Полірування лобового скла: Лобове скло затерте" style="object-position:50% 55%" loading="lazy" decoding="async"></picture></div>
-        <div class="pr-ph" data-i="5"><picture><source type="image/avif" srcset="images/photos/photo-vn-coat-480.avif 480w, images/photos/photo-vn-coat-800.avif 800w, images/photos/photo-vn-coat-1200.avif 1200w, images/photos/photo-vn-coat-1600.avif 1600w" sizes="(max-width:760px) 100vw, 52vw"><img src="images/photos/photo-vn-coat-800.webp" srcset="images/photos/photo-vn-coat-480.webp 480w, images/photos/photo-vn-coat-800.webp 800w, images/photos/photo-vn-coat-1200.webp 1200w, images/photos/photo-vn-coat-1600.webp 1600w" sizes="(max-width:760px) 100vw, 52vw" alt="Захисні покриття: Хочете захистити кузов" style="object-position:50% 55%" loading="lazy" decoding="async"></picture></div>
+        <div class="pr-ph on" data-i="0"><picture><source type="image/avif" srcset="images/photos/photo-vn-polish-480.avif 480w, images/photos/photo-vn-polish-800.avif 800w, images/photos/photo-vn-polish-1200.avif 1200w, images/photos/photo-vn-polish-1600.avif 1600w" sizes="(max-width:760px) 100vw, 52vw"><img src="images/photos/photo-vn-polish-800.webp" srcset="images/photos/photo-vn-polish-480.webp 480w, images/photos/photo-vn-polish-800.webp 800w, images/photos/photo-vn-polish-1200.webp 1200w, images/photos/photo-vn-polish-1600.webp 1600w" sizes="(max-width:760px) 100vw, 52vw" alt="Полірування кузова: Кузов втратив блиск" data-cap="Полірування кузова" style="object-position:50% 45%" loading="lazy" decoding="async"></picture></div>
+        <div class="pr-ph" data-i="1"><picture><source type="image/avif" srcset="images/photos/photo-vn-interior-480.avif 480w, images/photos/photo-vn-interior-800.avif 800w, images/photos/photo-vn-interior-1200.avif 1200w" sizes="(max-width:760px) 100vw, 52vw"><img src="images/photos/photo-vn-interior-800.webp" srcset="images/photos/photo-vn-interior-480.webp 480w, images/photos/photo-vn-interior-800.webp 800w, images/photos/photo-vn-interior-1200.webp 1200w" sizes="(max-width:760px) 100vw, 52vw" alt="Хімчистка салону: Салон брудний або з запахом" data-cap="Хімчистка салону" style="object-position:50% 55%" loading="lazy" decoding="async"></picture></div>
+        <div class="pr-ph" data-i="2"><picture><source type="image/avif" srcset="images/photos/photo-vn-presale-480.avif 480w, images/photos/photo-vn-presale-800.avif 800w, images/photos/photo-vn-presale-1200.avif 1200w, images/photos/photo-vn-presale-1600.avif 1600w" sizes="(max-width:760px) 100vw, 52vw"><img src="images/photos/photo-vn-presale-800.webp" srcset="images/photos/photo-vn-presale-480.webp 480w, images/photos/photo-vn-presale-800.webp 800w, images/photos/photo-vn-presale-1200.webp 1200w, images/photos/photo-vn-presale-1600.webp 1600w" sizes="(max-width:760px) 100vw, 52vw" alt="Передпродажна підготовка: Готуєте авто до продажу" data-cap="Передпродажна підготовка" style="object-position:50% 60%" loading="lazy" decoding="async"></picture></div>
+        <div class="pr-ph" data-i="3"><picture><source type="image/avif" srcset="images/photos/photo-vn-lights-480.avif 480w, images/photos/photo-vn-lights-800.avif 800w, images/photos/photo-vn-lights-1200.avif 1200w" sizes="(max-width:760px) 100vw, 52vw"><img src="images/photos/photo-vn-lights-800.webp" srcset="images/photos/photo-vn-lights-480.webp 480w, images/photos/photo-vn-lights-800.webp 800w, images/photos/photo-vn-lights-1200.webp 1200w" sizes="(max-width:760px) 100vw, 52vw" alt="Відновлення фар: Фари помутніли" data-cap="Відновлення фар" style="object-position:50% 50%" loading="lazy" decoding="async"></picture></div>
+        <div class="pr-ph" data-i="4"><picture><source type="image/avif" srcset="images/photos/photo-vn-glass-480.avif 480w, images/photos/photo-vn-glass-800.avif 800w, images/photos/photo-vn-glass-1200.avif 1200w, images/photos/photo-vn-glass-1600.avif 1600w" sizes="(max-width:760px) 100vw, 52vw"><img src="images/photos/photo-vn-glass-800.webp" srcset="images/photos/photo-vn-glass-480.webp 480w, images/photos/photo-vn-glass-800.webp 800w, images/photos/photo-vn-glass-1200.webp 1200w, images/photos/photo-vn-glass-1600.webp 1600w" sizes="(max-width:760px) 100vw, 52vw" alt="Полірування лобового скла: Лобове скло затерте" data-cap="Полірування лобового скла" style="object-position:50% 55%" loading="lazy" decoding="async"></picture></div>
+        <div class="pr-ph" data-i="5"><picture><source type="image/avif" srcset="images/photos/photo-vn-coat-480.avif 480w, images/photos/photo-vn-coat-800.avif 800w, images/photos/photo-vn-coat-1200.avif 1200w, images/photos/photo-vn-coat-1600.avif 1600w" sizes="(max-width:760px) 100vw, 52vw"><img src="images/photos/photo-vn-coat-800.webp" srcset="images/photos/photo-vn-coat-480.webp 480w, images/photos/photo-vn-coat-800.webp 800w, images/photos/photo-vn-coat-1200.webp 1200w, images/photos/photo-vn-coat-1600.webp 1600w" sizes="(max-width:760px) 100vw, 52vw" alt="Захисні покриття: Хочете захистити кузов" data-cap="Захисні покриття" style="object-position:50% 55%" loading="lazy" decoding="async"></picture></div>
           <span class="pr-sweep" aria-hidden="true"></span>
+          <button class="zoom" data-zoom="pr" type="button" aria-label="Відкрити фото на весь екран"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M9.5 2.5h4v4M6.5 13.5h-4v-4M13.5 2.5 9 7M2.5 13.5 7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </div>
         <div class="pr-sol" id="prSol" aria-live="polite">
           <p class="pr-for">Що зробимо</p>
@@ -1228,7 +1284,7 @@
   </div>
   <div class="pk-list">
     <article class="pk fd" style="--d:0.0s" aria-labelledby="pk-0">
-      <div class="pk-ph"><picture><source type="image/avif" srcset="images/photos/photo-vn-engine-480.avif 480w, images/photos/photo-vn-engine-800.avif 800w" sizes="(max-width:760px) 100vw, 320px"><img src="images/photos/photo-vn-engine-800.webp" srcset="images/photos/photo-vn-engine-480.webp 480w, images/photos/photo-vn-engine-800.webp 800w" sizes="(max-width:760px) 100vw, 320px" alt="Комплекс Мийка двигуна" style="object-position:50% 55%" loading="lazy" decoding="async"></picture></div>
+      <div class="pk-ph"><picture><source type="image/avif" srcset="images/photos/photo-vn-engine-480.avif 480w, images/photos/photo-vn-engine-800.avif 800w" sizes="(max-width:760px) 100vw, 320px"><img src="images/photos/photo-vn-engine-800.webp" srcset="images/photos/photo-vn-engine-480.webp 480w, images/photos/photo-vn-engine-800.webp 800w" sizes="(max-width:760px) 100vw, 320px" alt="Мийка двигуна" data-cap="Мийка двигуна" style="object-position:50% 55%" loading="lazy" decoding="async"></picture><button class="zoom" data-zoom="pk" type="button" aria-label="Відкрити фото на весь екран"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M9.5 2.5h4v4M6.5 13.5h-4v-4M13.5 2.5 9 7M2.5 13.5 7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
       <div class="pk-head">
         <h3 class="pk-name" id="pk-0">Мийка двигуна</h3>
         <p class="pk-goal">Щоб під капотом було так само охайно, як зовні</p>
@@ -1246,7 +1302,7 @@
       </div>
     </article>
     <article class="pk fd" style="--d:0.1s" aria-labelledby="pk-1">
-      <div class="pk-ph"><picture><source type="image/avif" srcset="images/photos/photo-vn-chrome-480.avif 480w, images/photos/photo-vn-chrome-800.avif 800w, images/photos/photo-vn-chrome-1200.avif 1200w" sizes="(max-width:760px) 100vw, 320px"><img src="images/photos/photo-vn-chrome-800.webp" srcset="images/photos/photo-vn-chrome-480.webp 480w, images/photos/photo-vn-chrome-800.webp 800w, images/photos/photo-vn-chrome-1200.webp 1200w" sizes="(max-width:760px) 100vw, 320px" alt="Комплекс Антихром" style="object-position:50% 22%" loading="lazy" decoding="async"></picture></div>
+      <div class="pk-ph"><picture><source type="image/avif" srcset="images/photos/photo-vn-chrome-480.avif 480w, images/photos/photo-vn-chrome-800.avif 800w, images/photos/photo-vn-chrome-1200.avif 1200w" sizes="(max-width:760px) 100vw, 320px"><img src="images/photos/photo-vn-chrome-800.webp" srcset="images/photos/photo-vn-chrome-480.webp 480w, images/photos/photo-vn-chrome-800.webp 800w, images/photos/photo-vn-chrome-1200.webp 1200w" sizes="(max-width:760px) 100vw, 320px" alt="Антихром" data-cap="Антихром" style="object-position:50% 22%" loading="lazy" decoding="async"></picture><button class="zoom" data-zoom="pk" type="button" aria-label="Відкрити фото на весь екран"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M9.5 2.5h4v4M6.5 13.5h-4v-4M13.5 2.5 9 7M2.5 13.5 7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
       <div class="pk-head">
         <h3 class="pk-name" id="pk-1">Антихром</h3>
         <p class="pk-goal">Хром стає чорним глянцем, і авто виглядає дорожче</p>
@@ -1264,7 +1320,7 @@
       </div>
     </article>
     <article class="pk fd" style="--d:0.2s" aria-labelledby="pk-2">
-      <div class="pk-ph"><picture><source type="image/avif" srcset="images/photos/photo-vn-wheel-480.avif 480w, images/photos/photo-vn-wheel-800.avif 800w, images/photos/photo-vn-wheel-1200.avif 1200w" sizes="(max-width:760px) 100vw, 320px"><img src="images/photos/photo-vn-wheel-800.webp" srcset="images/photos/photo-vn-wheel-480.webp 480w, images/photos/photo-vn-wheel-800.webp 800w, images/photos/photo-vn-wheel-1200.webp 1200w" sizes="(max-width:760px) 100vw, 320px" alt="Комплекс Фарбування керма" style="object-position:50% 55%" loading="lazy" decoding="async"></picture></div>
+      <div class="pk-ph"><picture><source type="image/avif" srcset="images/photos/photo-vn-wheel-480.avif 480w, images/photos/photo-vn-wheel-800.avif 800w, images/photos/photo-vn-wheel-1200.avif 1200w" sizes="(max-width:760px) 100vw, 320px"><img src="images/photos/photo-vn-wheel-800.webp" srcset="images/photos/photo-vn-wheel-480.webp 480w, images/photos/photo-vn-wheel-800.webp 800w, images/photos/photo-vn-wheel-1200.webp 1200w" sizes="(max-width:760px) 100vw, 320px" alt="Фарбування керма" data-cap="Фарбування керма" style="object-position:50% 55%" loading="lazy" decoding="async"></picture><button class="zoom" data-zoom="pk" type="button" aria-label="Відкрити фото на весь екран"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M9.5 2.5h4v4M6.5 13.5h-4v-4M13.5 2.5 9 7M2.5 13.5 7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
       <div class="pk-head">
         <h3 class="pk-name" id="pk-2">Фарбування керма</h3>
         <p class="pk-goal">Кермо виглядає як нове, а салон свіжішим</p>
@@ -1282,7 +1338,7 @@
       </div>
     </article>
     <article class="pk fd" style="--d:0.3s" aria-labelledby="pk-3">
-      <div class="pk-ph"><picture><source type="image/avif" srcset="images/photos/photo-vn-caliper-480.avif 480w, images/photos/photo-vn-caliper-800.avif 800w, images/photos/photo-vn-caliper-1200.avif 1200w" sizes="(max-width:760px) 100vw, 320px"><img src="images/photos/photo-vn-caliper-800.webp" srcset="images/photos/photo-vn-caliper-480.webp 480w, images/photos/photo-vn-caliper-800.webp 800w, images/photos/photo-vn-caliper-1200.webp 1200w" sizes="(max-width:760px) 100vw, 320px" alt="Комплекс Фарбування супортів" style="object-position:78% 50%" loading="lazy" decoding="async"></picture></div>
+      <div class="pk-ph"><picture><source type="image/avif" srcset="images/photos/photo-vn-caliper-480.avif 480w, images/photos/photo-vn-caliper-800.avif 800w, images/photos/photo-vn-caliper-1200.avif 1200w" sizes="(max-width:760px) 100vw, 320px"><img src="images/photos/photo-vn-caliper-800.webp" srcset="images/photos/photo-vn-caliper-480.webp 480w, images/photos/photo-vn-caliper-800.webp 800w, images/photos/photo-vn-caliper-1200.webp 1200w" sizes="(max-width:760px) 100vw, 320px" alt="Фарбування супортів" data-cap="Фарбування супортів" style="object-position:78% 50%" loading="lazy" decoding="async"></picture><button class="zoom" data-zoom="pk" type="button" aria-label="Відкрити фото на весь екран"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M9.5 2.5h4v4M6.5 13.5h-4v-4M13.5 2.5 9 7M2.5 13.5 7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
       <div class="pk-head">
         <h3 class="pk-name" id="pk-3">Фарбування супортів</h3>
         <p class="pk-goal">Помітний акцент, який видно крізь диски</p>
@@ -1313,14 +1369,15 @@
     <div class="ba-media fd" style="--d:.1s">
     <div class="ba" id="baStage" role="tabpanel" aria-labelledby="ba-tab-lights">
       <div class="ba-scene t-lights real on" data-kind="lights" style="--pos:50% 50%;--mpos:50% 50%">
-        <div class="ba-layer ba-after"><img src="images/before-after/vn-lights/after.webp" srcset="images/before-after/vn-lights/after.webp 1600w, images/before-after/vn-lights/after-800.webp 800w" sizes="(max-width:760px) 100vw, 60vw" alt="Відновлення фар: авто після робіт" style="object-position:var(--pos)" loading="lazy" decoding="async"></div>
-        <div class="ba-layer ba-before"><img src="images/before-after/vn-lights/before.webp" srcset="images/before-after/vn-lights/before.webp 1600w, images/before-after/vn-lights/before-800.webp 800w" sizes="(max-width:760px) 100vw, 60vw" alt="Відновлення фар: авто до робіт" style="object-position:var(--pos)" loading="lazy" decoding="async"></div>
+        <div class="ba-layer ba-after"><img src="images/before-after/vn-lights/after.webp" srcset="images/before-after/vn-lights/after.webp 1600w, images/before-after/vn-lights/after-800.webp 800w" sizes="(max-width:760px) 100vw, 60vw" alt="Відновлення фар: авто після робіт" data-cap="Відновлення фар — після" style="object-position:var(--pos)" loading="lazy" decoding="async"></div>
+        <div class="ba-layer ba-before"><img src="images/before-after/vn-lights/before.webp" srcset="images/before-after/vn-lights/before.webp 1600w, images/before-after/vn-lights/before-800.webp 800w" sizes="(max-width:760px) 100vw, 60vw" alt="Відновлення фар: авто до робіт" data-cap="Відновлення фар — до" style="object-position:var(--pos)" loading="lazy" decoding="async"></div>
       </div>
       <div class="ba-scene t-engine real" data-kind="engine" style="--pos:50% 50%;--mpos:50% 50%">
-        <div class="ba-layer ba-after"><img src="images/before-after/vn-engine/after.webp" srcset="images/before-after/vn-engine/after.webp 1600w, images/before-after/vn-engine/after-800.webp 800w" sizes="(max-width:760px) 100vw, 60vw" alt="Мийка двигуна: авто після робіт" style="object-position:var(--pos)" loading="lazy" decoding="async"></div>
-        <div class="ba-layer ba-before"><img src="images/before-after/vn-engine/before.webp" srcset="images/before-after/vn-engine/before.webp 1600w, images/before-after/vn-engine/before-800.webp 800w" sizes="(max-width:760px) 100vw, 60vw" alt="Мийка двигуна: авто до робіт" style="object-position:var(--pos)" loading="lazy" decoding="async"></div>
+        <div class="ba-layer ba-after"><img src="images/before-after/vn-engine/after.webp" srcset="images/before-after/vn-engine/after.webp 1600w, images/before-after/vn-engine/after-800.webp 800w" sizes="(max-width:760px) 100vw, 60vw" alt="Мийка двигуна: авто після робіт" data-cap="Мийка двигуна — після" style="object-position:var(--pos)" loading="lazy" decoding="async"></div>
+        <div class="ba-layer ba-before"><img src="images/before-after/vn-engine/before.webp" srcset="images/before-after/vn-engine/before.webp 1600w, images/before-after/vn-engine/before-800.webp 800w" sizes="(max-width:760px) 100vw, 60vw" alt="Мийка двигуна: авто до робіт" data-cap="Мийка двигуна — до" style="object-position:var(--pos)" loading="lazy" decoding="async"></div>
       </div>
       <span class="ba-line" aria-hidden="true"></span>
+      <button class="zoom" data-zoom="ba" type="button" aria-label="Відкрити фото на весь екран"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M9.5 2.5h4v4M6.5 13.5h-4v-4M13.5 2.5 9 7M2.5 13.5 7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <span class="ba-tag b" aria-hidden="true">До</span><span class="ba-tag a" aria-hidden="true">Після</span>
       <span class="ba-grip" role="slider" tabindex="0" aria-label="Межа між фото «до» і «після»" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="Видно 50% фото «до» і 50% фото «після»" aria-controls="baStage"><svg width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true"><path d="M5.5 1.5 1.5 6l4 4.5M12.5 1.5l4 4.5-4 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </div>
@@ -1427,7 +1484,7 @@
       <h2 class="h2 rv" id="faq-h"><span class="ln"><span>Часті питання</span></span><span class="ln"><span class="soft">перед записом</span></span></h2>
       <p class="fq-lead fd" style="--d:.15s">Зібрали те, що питають найчастіше. Не знайшли свого питання? Напишіть, і майстер відповість особисто.</p>
       <div class="fq-card fd" id="fqCard" style="--d:.25s">
-        <div class="fq-ph"><picture><source type="image/avif" srcset="images/photos/photo-vn-studio-480.avif 480w, images/photos/photo-vn-studio-800.avif 800w, images/photos/photo-vn-studio-1200.avif 1200w" sizes="(max-width:760px) 100vw, 520px"><img src="images/photos/photo-vn-studio-800.webp" srcset="images/photos/photo-vn-studio-480.webp 480w, images/photos/photo-vn-studio-800.webp 800w, images/photos/photo-vn-studio-1200.webp 1200w" sizes="(max-width:760px) 100vw, 520px" alt="Майстер студії VN Detail за роботою" style="object-position:50% 45%" loading="lazy" decoding="async"></picture></div>
+        <div class="fq-ph"><picture><source type="image/avif" srcset="images/photos/photo-vn-studio-480.avif 480w, images/photos/photo-vn-studio-800.avif 800w, images/photos/photo-vn-studio-1200.avif 1200w" sizes="(max-width:760px) 100vw, 520px"><img src="images/photos/photo-vn-studio-800.webp" srcset="images/photos/photo-vn-studio-480.webp 480w, images/photos/photo-vn-studio-800.webp 800w, images/photos/photo-vn-studio-1200.webp 1200w" sizes="(max-width:760px) 100vw, 520px" alt="Майстер студії VN Detail за роботою" data-cap="Студія VN Detail" style="object-position:50% 45%" loading="lazy" decoding="async"></picture><button class="zoom" data-zoom="fq" type="button" aria-label="Відкрити фото на весь екран"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M9.5 2.5h4v4M6.5 13.5h-4v-4M13.5 2.5 9 7M2.5 13.5 7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
         <div class="fq-body">
           <p class="fq-status"><i class="fq-dot" aria-hidden="true"></i><span id="fqStatus">Працюємо пн–сб з 9:00 до 18:00</span></p>
           <p class="fq-note" id="fqNote">Пишіть у Telegram або телефонуйте в робочий час.</p>
@@ -2129,6 +2186,110 @@
       btn.disabled = false; btn.removeAttribute('aria-busy'); btn.firstChild.nodeValue = label;
     }
   });
+})();
+</script>
+<script>
+/* Галерея: фото послуг, «деталей», до/після й студії відкриваються на весь екран; стрілки, свайп, мініатюри */
+(() => {
+  const pick = (img, big) => {
+    let best = null, bw = big ? -1 : Infinity;
+    (img.getAttribute('srcset') || '').split(',').forEach(part => {
+      const [u, w] = part.trim().split(/\s+/); const n = parseInt(w, 10) || 0;
+      if (u && (big ? n > bw : n < bw)) { bw = n; best = u; }
+    });
+    return best || img.getAttribute('src');
+  };
+  const items = [];
+  const add = img => img ? items.push({ img, src: pick(img, true), th: pick(img, false), cap: img.dataset.cap || img.alt }) - 1 : -1;
+  const prIdx = [...document.querySelectorAll('.pr-ph img')].map(add);
+  const pkIdx = [...document.querySelectorAll('.pk-ph img')].map(add);
+  const baIdx = [...document.querySelectorAll('.ba-scene')].map(sc => {
+    if (!sc.classList.contains('real')) return -1;
+    const i = add(sc.querySelector('.ba-before img')); add(sc.querySelector('.ba-after img')); return i;
+  });
+  const fqIdx = add(document.querySelector('.fq-ph img'));
+  if (!items.length) return;
+
+  const I = d => `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="${d}" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const lb = document.createElement('div');
+  lb.className = 'lb'; lb.hidden = true;
+  lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Перегляд фото');
+  lb.innerHTML = `<div class="lb-top"><span class="lb-n" aria-live="polite"></span><button class="lb-x" type="button" aria-label="Закрити">${I('M5 5l10 10M15 5 5 15')}</button></div>
+<div class="lb-stage"><img class="lb-img" alt="" decoding="async" draggable="false"><button class="lb-nav prev" type="button" aria-label="Попереднє фото">${I('M12 4 6 10l6 6')}</button><button class="lb-nav next" type="button" aria-label="Наступне фото">${I('M8 4l6 6-6 6')}</button></div>
+<p class="lb-cap"></p><div class="lb-thumbs">${items.map((it, i) => `<button class="lb-th" type="button" data-i="${i}" aria-label="Фото ${i + 1}: ${it.cap.replace(/"/g, '&quot;')}"><img src="${it.th}" alt="" loading="lazy" decoding="async"></button>`).join('')}</div>`;
+  document.body.appendChild(lb);
+  const $ = s => lb.querySelector(s);
+  const img = $('.lb-img'), stage = $('.lb-stage'), cap = $('.lb-cap'), num = $('.lb-n'), strip = $('.lb-thumbs'), thumbs = [...lb.querySelectorAll('.lb-th')];
+  const n = items.length, pad = x => String(x).padStart(2, '0');
+  if (n < 2) lb.querySelectorAll('.lb-nav').forEach(b => b.hidden = true);
+  let cur = 0, back = null, viaHistory = false;
+
+  const show = i => {
+    cur = (i + n) % n; const it = items[cur];
+    img.classList.add('ld'); img.style.transform = '';
+    img.onload = () => img.classList.remove('ld');
+    img.src = it.src; img.alt = it.img.alt;
+    if (img.complete) img.classList.remove('ld');
+    cap.textContent = it.cap; num.textContent = `${pad(cur + 1)} / ${pad(n)}`;
+    thumbs.forEach((t, k) => t.setAttribute('aria-current', k === cur ? 'true' : 'false'));
+    const t = thumbs[cur]; strip.scrollTo({ left: t.offsetLeft - (strip.clientWidth - t.offsetWidth) / 2, behavior: lb.classList.contains('open') ? 'smooth' : 'auto' });
+    [cur + 1, cur - 1].forEach(k => { new Image().src = items[(k + n) % n].src; });
+  };
+  const open = i => {
+    if (i < 0) return;
+    back = document.activeElement;
+    lb.hidden = false; document.documentElement.classList.add('lb-lock');
+    show(i); requestAnimationFrame(() => lb.classList.add('open'));
+    $('.lb-x').focus();
+    history.pushState({ lb: 1 }, ''); viaHistory = true;
+  };
+  const close = (fromPop) => {
+    if (lb.hidden) return;
+    lb.classList.remove('open'); document.documentElement.classList.remove('lb-lock');
+    setTimeout(() => { lb.hidden = true; img.removeAttribute('src'); }, 250);
+    if (viaHistory && !fromPop) history.back();
+    viaHistory = false;
+    if (back) back.focus({ preventScroll: true });
+  };
+  addEventListener('popstate', () => close(true));
+
+  $('.lb-x').addEventListener('click', () => close());
+  $('.prev').addEventListener('click', () => show(cur - 1));
+  $('.next').addEventListener('click', () => show(cur + 1));
+  strip.addEventListener('click', e => { const t = e.target.closest('.lb-th'); if (t) show(+t.dataset.i); });
+  lb.addEventListener('keydown', e => {
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowRight') show(cur + 1);
+    else if (e.key === 'ArrowLeft') show(cur - 1);
+    else if (e.key === 'Tab') { // фокус не виходить за межі галереї
+      const f = [...lb.querySelectorAll('button:not([hidden])')], a = f[0], z = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === a) { z.focus(); e.preventDefault(); }
+      else if (!e.shiftKey && document.activeElement === z) { a.focus(); e.preventDefault(); }
+    }
+  });
+  // свайп: тягнемо фото пальцем або мишею; короткий тап по фону закриває
+  let x0 = null, dx = 0;
+  stage.addEventListener('pointerdown', e => {
+    if (e.target.closest('.lb-nav') || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    x0 = e.clientX; dx = 0; stage.classList.add('drag'); stage.setPointerCapture(e.pointerId);
+  });
+  stage.addEventListener('pointermove', e => { if (x0 === null) return; dx = e.clientX - x0; img.style.transform = `translateX(${dx}px)`; });
+  const end = e => {
+    if (x0 === null) return;
+    stage.classList.remove('drag'); x0 = null;
+    if (Math.abs(dx) > 50 && n > 1) show(cur + (dx < 0 ? 1 : -1));
+    else { img.style.transform = ''; if (Math.abs(dx) < 6 && e.type === 'pointerup' && e.target !== img) close(); }
+  };
+  stage.addEventListener('pointerup', end); stage.addEventListener('pointercancel', end);
+
+  // що відкривати по кліку на сайті
+  const stop = e => e.stopPropagation();
+  document.querySelectorAll('.zoom').forEach(b => ['pointerdown', 'touchstart', 'mousedown'].forEach(t => b.addEventListener(t, stop, { passive: true })));
+  const on = (sel, fn) => document.querySelectorAll(sel).forEach(el => el.addEventListener('click', e => { e.preventDefault(); open(fn(el)); }));
+  on('[data-zoom="pr"]', () => { const p = document.querySelector('.pr-ph.on'); return prIdx[p ? +p.dataset.i : 0]; });
+  on('.pk-ph', el => pkIdx[[...document.querySelectorAll('.pk-ph')].indexOf(el)]);
+  on('[data-zoom="ba"]', () => baIdx[[...document.querySelectorAll('.ba-scene')].findIndex(sc => sc.classList.contains('on'))]);
+  on('.fq-ph', () => fqIdx);
 })();
 </script>
 </body>
