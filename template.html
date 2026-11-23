@@ -1115,7 +1115,7 @@
   html.lb-lock{overflow:hidden}
   .lb{
     position:fixed;inset:0;z-index:100;display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;
-    background:rgba(8,9,11,.97);color:var(--white);opacity:0;transition:opacity .25s ease;
+    background:#08090B;color:var(--white);opacity:0;transition:opacity .25s ease;
   }
   .lb.open{opacity:1}
   .lb[hidden]{display:none}
@@ -1127,8 +1127,8 @@
   }
   .lb-x:hover,.lb-nav:hover{border-color:rgba(var(--tube-rgb),.8);background:rgba(243,243,241,.1)}
   .lb-x:focus-visible,.lb-nav:focus-visible,.lb-th:focus-visible{outline:2px solid var(--tube);outline-offset:2px}
-  .lb-stage{position:relative;display:grid;place-items:center;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;padding:0 calc(var(--gut) + 64px)}
-  .lb-img{max-width:100%;max-height:100%;object-fit:contain;border-radius:4px;transition:opacity .2s ease;-webkit-user-drag:none}
+  .lb-stage{position:relative;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;padding:0 calc(var(--gut) + 64px)}
+  .lb-img{display:block;width:100%;height:100%;object-fit:contain;transition:opacity .2s ease;-webkit-user-drag:none}
   .lb-img.ld{opacity:0}
   .lb-stage.drag .lb-img{transition:none}
   .lb-nav{position:absolute;top:50%;margin-top:-23px;background:rgba(11,12,14,.6)}
@@ -1143,7 +1143,6 @@
   .lb-th img{width:100%;height:100%;object-fit:cover;display:block}
   @media (max-width:760px){
     .lb-stage{padding:0}
-    .lb-img{border-radius:0}
     .lb-nav{width:40px;height:40px;margin-top:-20px}
     .lb-nav.prev{left:10px}
     .lb-nav.next{right:10px}
@@ -2074,7 +2073,7 @@
     if (i < 0) return;
     back = document.activeElement;
     lb.hidden = false; document.documentElement.classList.add('lb-lock');
-    show(i); requestAnimationFrame(() => lb.classList.add('open'));
+    show(i); void lb.offsetWidth; lb.classList.add('open');
     $('.lb-x').focus();
     history.pushState({ lb: 1 }, ''); viaHistory = true;
   };
@@ -2104,6 +2103,11 @@
   });
   // свайп: тягнемо фото пальцем або мишею; короткий тап по фону закриває
   let x0 = null, dx = 0;
+  const inImg = (x, y) => { // чи потрапив тап у видиму частину фото (object-fit: contain лишає поля)
+    const r = img.getBoundingClientRect(), k = Math.min(r.width / (img.naturalWidth || 1), r.height / (img.naturalHeight || 1));
+    const w = img.naturalWidth * k, h = img.naturalHeight * k, l = r.left + (r.width - w) / 2, t = r.top + (r.height - h) / 2;
+    return x >= l && x <= l + w && y >= t && y <= t + h;
+  };
   stage.addEventListener('pointerdown', e => {
     if (e.target.closest('.lb-nav') || (e.pointerType === 'mouse' && e.button !== 0)) return;
     x0 = e.clientX; dx = 0; stage.classList.add('drag'); stage.setPointerCapture(e.pointerId);
@@ -2113,7 +2117,7 @@
     if (x0 === null) return;
     stage.classList.remove('drag'); x0 = null;
     if (Math.abs(dx) > 50 && n > 1) show(cur + (dx < 0 ? 1 : -1));
-    else { img.style.transform = ''; if (Math.abs(dx) < 6 && e.type === 'pointerup' && e.target !== img) close(); }
+    else { img.style.transform = ''; if (Math.abs(dx) < 6 && e.type === 'pointerup' && !inImg(e.clientX, e.clientY)) close(); }
   };
   stage.addEventListener('pointerup', end); stage.addEventListener('pointercancel', end);
 
