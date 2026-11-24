@@ -1082,9 +1082,20 @@
     .top-ic.tg{margin-left:-2px}
   }
   @media (max-width:760px), (max-width:1100px) and (orientation:portrait){
-    .top-ic{display:none}
+    .top-ic:not(.tg){display:none}
     .top-ic.route ~ .tel{margin-left:auto}
+    /* Telegram лишається й на телефоні: такий самий кружок, як телефон */
+    .top-ic.tg{
+      width:44px;height:44px;margin-left:0;flex:none;color:var(--white);
+      background:rgba(11,12,14,.5);border:1px solid var(--hair);
+      backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    }
   }
+  @media (max-width:389px){ /* вузькі телефони: кнопка без значка камери, щоб влізли телефон і Telegram */
+    .top{gap:8px}
+    .top-cta svg{display:none}
+  }
+  @media (max-width:349px){.top-ic.tg{display:none}}
   .ft-row{align-items:flex-end}
   .ft-row > .ft-brand,.ft-row > nav{padding-bottom:16px}
   .ft-socw{display:flex;flex-direction:column;gap:10px}
@@ -1105,7 +1116,8 @@
   }
   .zoom:hover{border-color:rgba(var(--tube-rgb),.8);background:rgba(11,12,14,.75)}
   .zoom:focus-visible{outline:2px solid var(--tube);outline-offset:2px}
-  .pk-ph,.fq-ph{cursor:zoom-in}
+  .pk-ph,.fq-ph,.pr-photos{cursor:zoom-in}
+  .zoom.has-n{width:auto;padding:0 13px 0 11px;gap:7px;display:inline-flex;align-items:center;border-radius:20px;font-size:13px;font-weight:600;line-height:1;font-family:inherit}
   .js .pr-stage:not(.lit) .zoom,.js .ba:not(.lit) .zoom{opacity:0}
   .ba:has(.ba-scene.on:not(.real)) .zoom{display:none}
   @media (max-width:760px){.zoom{top:12px;right:12px;width:38px;height:38px}}
@@ -1139,6 +1151,7 @@
   .lb-th:hover{opacity:.8}
   .lb-th[aria-current="true"]{opacity:1;outline-color:var(--tube)}
   .lb-th img{width:100%;height:100%;object-fit:cover;display:block}
+  .lb.single .lb-nav,.lb.single .lb-thumbs,.lb.single .lb-n{visibility:hidden}
   @media (max-width:760px){
     .lb-stage{padding:0}
     .lb-nav{width:40px;height:40px;margin-top:-20px}
@@ -1375,6 +1388,10 @@
         <div class="ba-layer ba-after"><img src="images/before-after/vn-engine/after.webp" srcset="images/before-after/vn-engine/after.webp 1600w, images/before-after/vn-engine/after-800.webp 800w" sizes="(max-width:760px) 100vw, 60vw" alt="Мийка двигуна: авто після робіт" data-cap="Мийка двигуна — після" style="object-position:var(--pos)" loading="lazy" decoding="async"></div>
         <div class="ba-layer ba-before"><img src="images/before-after/vn-engine/before.webp" srcset="images/before-after/vn-engine/before.webp 1600w, images/before-after/vn-engine/before-800.webp 800w" sizes="(max-width:760px) 100vw, 60vw" alt="Мийка двигуна: авто до робіт" data-cap="Мийка двигуна — до" style="object-position:var(--pos)" loading="lazy" decoding="async"></div>
       </div>
+      <div class="ba-scene t-r2 real" data-kind="r2" style="--pos:50% 50%;--mpos:50% 50%">
+        <div class="ba-layer ba-after"><img src="images/uploads/photo2026-11-24-105842.jpeg" srcset="images/uploads/photo2026-11-24-105842.jpeg 1600w" sizes="(max-width:760px) 100vw, 60vw" alt="Антихром: авто після робіт" data-cap="Антихром — після" style="object-position:var(--pos)" loading="lazy" decoding="async"></div>
+        <div class="ba-layer ba-before"><img src="images/uploads/photo2026-11-24-105836.jpeg" srcset="images/uploads/photo2026-11-24-105836.jpeg 1600w" sizes="(max-width:760px) 100vw, 60vw" alt="Антихром: авто до робіт" data-cap="Антихром — до" style="object-position:var(--pos)" loading="lazy" decoding="async"></div>
+      </div>
       <span class="ba-line" aria-hidden="true"></span>
       <button class="zoom" data-zoom="ba" type="button" aria-label="Відкрити фото на весь екран"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M9.5 2.5h4v4M6.5 13.5h-4v-4M13.5 2.5 9 7M2.5 13.5 7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <span class="ba-tag b" aria-hidden="true">До</span><span class="ba-tag a" aria-hidden="true">Після</span>
@@ -1385,6 +1402,7 @@
     <div class="ba-tabs fd" style="--d:.2s" role="tablist" aria-label="Вид робіт">
       <button class="ba-tab" role="tab" id="ba-tab-lights" aria-selected="true" aria-controls="baStage" data-i="0">Відновлення фар</button>
       <button class="ba-tab" role="tab" id="ba-tab-engine" aria-selected="false" aria-controls="baStage" data-i="1" tabindex="-1">Мийка двигуна</button>
+      <button class="ba-tab" role="tab" id="ba-tab-r2" aria-selected="false" aria-controls="baStage" data-i="2" tabindex="-1">Антихром</button>
     </div>
     <div class="ba-caps fd" id="baCaps" style="--d:.25s">
         <p class="ba-cap"><b>До</b><span>Мутний пожовклий пластик, світло розсіюється.</span></p>
@@ -1770,7 +1788,7 @@
   const tabs = [...document.querySelectorAll('.ba-tab')];
   const caps = document.getElementById('baCaps');
   const hint = document.getElementById('baHint');
-  const CAPS = [["Мутний пожовклий пластик, світло розсіюється.", "Прозорі фари й свіжий вигляд передньої частини авто."], ["Пил і бруд на двигуні та в моторному відсіку.", "Чистий двигун і охайний вигляд під капотом."]];
+  const CAPS = [["Мутний пожовклий пластик, світло розсіюється.", "Прозорі фари й свіжий вигляд передньої частини авто."], ["Пил і бруд на двигуні та в моторному відсіку.", "Чистий двигун і охайний вигляд під капотом."], ["Молдинги навколо вікон - хром.", "Молдинги навколо вікон обклеїні в чорний глянець."]];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let x = 50, target = 50, raf = null, anim = null, cur = 0, sceneT = null;
 
@@ -2188,7 +2206,8 @@
 })();
 </script>
 <script>
-/* Галерея: фото послуг, «деталей», до/після й студії відкриваються на весь екран; стрілки, свайп, мініатюри */
+/* Галерея: фото відкривається на весь екран і гортаються тільки фото цієї ж послуги
+   (головне фото картки + «Фото робіт» з адмінки); у «до/після» — усі пари; стрілки, свайп, мініатюри */
 (() => {
   const pick = (img, big) => {
     let best = null, bw = big ? -1 : Infinity;
@@ -2198,16 +2217,20 @@
     });
     return best || img.getAttribute('src');
   };
-  const items = [];
-  const add = img => img ? items.push({ img, src: pick(img, true), th: pick(img, false), cap: img.dataset.cap || img.alt }) - 1 : -1;
-  const prIdx = [...document.querySelectorAll('.pr-ph img')].map(add);
-  const pkIdx = [...document.querySelectorAll('.pk-ph img')].map(add);
-  const baIdx = [...document.querySelectorAll('.ba-scene')].map(sc => {
+  const one = img => ({ src: pick(img, true), th: pick(img, false), cap: img.dataset.cap || img.alt, alt: img.alt });
+  const group = el => {
+    const img = el.querySelector('img'); if (!img) return [];
+    const main = one(img); let extra = [];
+    try { extra = JSON.parse(el.dataset.gal || '[]'); } catch (e) {}
+    return [main, ...extra.map(g => ({ src: g.src, th: g.th, cap: main.cap, alt: main.cap }))];
+  };
+  const prG = [...document.querySelectorAll('.pr-ph')].map(group);
+  const pkG = [...document.querySelectorAll('.pk-ph')].map(group);
+  const baG = [], baStart = [...document.querySelectorAll('.ba-scene')].map(sc => {
     if (!sc.classList.contains('real')) return -1;
-    const i = add(sc.querySelector('.ba-before img')); add(sc.querySelector('.ba-after img')); return i;
+    const i = baG.length; ['.ba-before img', '.ba-after img'].forEach(s => { const im = sc.querySelector(s); if (im) baG.push(one(im)); }); return i;
   });
-  const fqIdx = add(document.querySelector('.fq-ph img'));
-  if (!items.length) return;
+  const fqEl = document.querySelector('.fq-ph'), fqG = fqEl ? group(fqEl) : [];
 
   const I = d => `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="${d}" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   const lb = document.createElement('div');
@@ -2215,34 +2238,37 @@
   lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Перегляд фото');
   lb.innerHTML = `<div class="lb-top"><span class="lb-n" aria-live="polite"></span><button class="lb-x" type="button" aria-label="Закрити">${I('M5 5l10 10M15 5 5 15')}</button></div>
 <div class="lb-stage"><img class="lb-img" alt="" decoding="async" draggable="false"><button class="lb-nav prev" type="button" aria-label="Попереднє фото">${I('M12 4 6 10l6 6')}</button><button class="lb-nav next" type="button" aria-label="Наступне фото">${I('M8 4l6 6-6 6')}</button></div>
-<p class="lb-cap"></p><div class="lb-thumbs">${items.map((it, i) => `<button class="lb-th" type="button" data-i="${i}" aria-label="Фото ${i + 1}: ${it.cap.replace(/"/g, '&quot;')}"><img src="${it.th}" alt="" loading="lazy" decoding="async"></button>`).join('')}</div>`;
+<p class="lb-cap"></p><div class="lb-thumbs"></div>`;
   document.body.appendChild(lb);
   const $ = s => lb.querySelector(s);
-  const img = $('.lb-img'), stage = $('.lb-stage'), cap = $('.lb-cap'), num = $('.lb-n'), strip = $('.lb-thumbs'), thumbs = [...lb.querySelectorAll('.lb-th')];
-  const n = items.length, pad = x => String(x).padStart(2, '0');
-  if (n < 2) lb.querySelectorAll('.lb-nav').forEach(b => b.hidden = true);
-  let cur = 0, back = null, viaHistory = false;
+  const img = $('.lb-img'), stage = $('.lb-stage'), cap = $('.lb-cap'), num = $('.lb-n'), strip = $('.lb-thumbs');
+  const pad = x => String(x).padStart(2, '0'), esc = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  let items = [], thumbs = [], n = 0, cur = 0, back = null, viaHistory = false;
 
   const show = i => {
     cur = (i + n) % n; const it = items[cur];
     img.classList.add('ld'); img.style.transform = '';
     img.onload = () => img.classList.remove('ld');
-    img.src = it.src; img.alt = it.img.alt;
+    img.src = it.src; img.alt = it.alt;
     if (img.complete) img.classList.remove('ld');
     cap.textContent = it.cap; num.textContent = `${pad(cur + 1)} / ${pad(n)}`;
     thumbs.forEach((t, k) => t.setAttribute('aria-current', k === cur ? 'true' : 'false'));
-    const t = thumbs[cur]; strip.scrollTo({ left: t.offsetLeft - (strip.clientWidth - t.offsetWidth) / 2, behavior: lb.classList.contains('open') ? 'smooth' : 'auto' });
-    [cur + 1, cur - 1].forEach(k => { new Image().src = items[(k + n) % n].src; });
+    const t = thumbs[cur]; if (t) strip.scrollTo({ left: t.offsetLeft - (strip.clientWidth - t.offsetWidth) / 2, behavior: lb.classList.contains('open') ? 'smooth' : 'auto' });
+    if (n > 1) [cur + 1, cur - 1].forEach(k => { new Image().src = items[(k + n) % n].src; });
   };
-  const open = i => {
-    if (i < 0) return;
+  const open = (list, i) => {
+    if (!list || !list.length || i < 0) return;
+    items = list; n = list.length;
+    strip.innerHTML = items.map((it, k) => `<button class="lb-th" type="button" data-i="${k}" aria-label="Фото ${k + 1}: ${esc(it.cap)}"><img src="${esc(it.th)}" alt="" loading="lazy" decoding="async"></button>`).join('');
+    thumbs = [...strip.querySelectorAll('.lb-th')];
+    lb.classList.toggle('single', n < 2);
     back = document.activeElement;
     lb.hidden = false; document.documentElement.classList.add('lb-lock');
     show(i); void lb.offsetWidth; lb.classList.add('open');
     $('.lb-x').focus();
     history.pushState({ lb: 1 }, ''); viaHistory = true;
   };
-  const close = (fromPop) => {
+  const close = fromPop => {
     if (lb.hidden) return;
     lb.classList.remove('open'); document.documentElement.classList.remove('lb-lock');
     setTimeout(() => { lb.hidden = true; img.removeAttribute('src'); }, 250);
@@ -2258,17 +2284,17 @@
   strip.addEventListener('click', e => { const t = e.target.closest('.lb-th'); if (t) show(+t.dataset.i); });
   lb.addEventListener('keydown', e => {
     if (e.key === 'Escape') close();
-    else if (e.key === 'ArrowRight') show(cur + 1);
-    else if (e.key === 'ArrowLeft') show(cur - 1);
+    else if (e.key === 'ArrowRight' && n > 1) show(cur + 1);
+    else if (e.key === 'ArrowLeft' && n > 1) show(cur - 1);
     else if (e.key === 'Tab') { // фокус не виходить за межі галереї
-      const f = [...lb.querySelectorAll('button:not([hidden])')], a = f[0], z = f[f.length - 1];
+      const f = [...lb.querySelectorAll('button')].filter(b => b.offsetParent && getComputedStyle(b).visibility !== 'hidden'), a = f[0], z = f[f.length - 1];
       if (e.shiftKey && document.activeElement === a) { z.focus(); e.preventDefault(); }
       else if (!e.shiftKey && document.activeElement === z) { a.focus(); e.preventDefault(); }
     }
   });
-  // свайп: тягнемо фото пальцем або мишею; короткий тап по фону закриває
+  // свайп: тягнемо фото пальцем або мишею; короткий тап повз фото закриває
   let x0 = null, dx = 0;
-  const inImg = (x, y) => { // чи потрапив тап у видиму частину фото (object-fit: contain лишає поля)
+  const inImg = (x, y) => { // object-fit: contain лишає поля — рахуємо видиму частину фото
     const r = img.getBoundingClientRect(), k = Math.min(r.width / (img.naturalWidth || 1), r.height / (img.naturalHeight || 1));
     const w = img.naturalWidth * k, h = img.naturalHeight * k, l = r.left + (r.width - w) / 2, t = r.top + (r.height - h) / 2;
     return x >= l && x <= l + w && y >= t && y <= t + h;
@@ -2277,7 +2303,7 @@
     if (e.target.closest('.lb-nav') || (e.pointerType === 'mouse' && e.button !== 0)) return;
     x0 = e.clientX; dx = 0; stage.classList.add('drag'); stage.setPointerCapture(e.pointerId);
   });
-  stage.addEventListener('pointermove', e => { if (x0 === null) return; dx = e.clientX - x0; img.style.transform = `translateX(${dx}px)`; });
+  stage.addEventListener('pointermove', e => { if (x0 === null || n < 2) return; dx = e.clientX - x0; img.style.transform = `translateX(${dx}px)`; });
   const end = e => {
     if (x0 === null) return;
     stage.classList.remove('drag'); x0 = null;
@@ -2286,14 +2312,31 @@
   };
   stage.addEventListener('pointerup', end); stage.addEventListener('pointercancel', end);
 
+  // кнопка ⤢ показує, скільки фото в добірці
+  const label = (btn, count) => {
+    if (!btn) return;
+    const has = count > 1; btn.classList.toggle('has-n', has);
+    let s = btn.querySelector('.zoom-n');
+    if (has) { if (!s) { s = document.createElement('span'); s.className = 'zoom-n'; btn.appendChild(s); } s.textContent = `${count} фото`; btn.setAttribute('aria-label', `Відкрити галерею: ${count} фото`); }
+    else if (s) { s.remove(); btn.setAttribute('aria-label', 'Відкрити фото на весь екран'); }
+  };
+  const prOn = () => { const p = document.querySelector('.pr-ph.on'); return p ? +p.dataset.i : 0; };
+  const prBtn = document.querySelector('[data-zoom="pr"]');
+  const prLabel = () => label(prBtn, (prG[prOn()] || []).length);
+  prLabel();
+  const photos = document.querySelector('.pr-photos');
+  if (photos) new MutationObserver(prLabel).observe(photos, { subtree: true, attributes: true, attributeFilter: ['class'] });
+  document.querySelectorAll('.pk-ph').forEach((el, i) => label(el.querySelector('.zoom'), pkG[i].length));
+  label(document.querySelector('[data-zoom="ba"]'), baG.length);
+
   // що відкривати по кліку на сайті
   const stop = e => e.stopPropagation();
   document.querySelectorAll('.zoom').forEach(b => ['pointerdown', 'touchstart', 'mousedown'].forEach(t => b.addEventListener(t, stop, { passive: true })));
-  const on = (sel, fn) => document.querySelectorAll(sel).forEach(el => el.addEventListener('click', e => { e.preventDefault(); open(fn(el)); }));
-  on('[data-zoom="pr"]', () => { const p = document.querySelector('.pr-ph.on'); return prIdx[p ? +p.dataset.i : 0]; });
-  on('.pk-ph', el => pkIdx[[...document.querySelectorAll('.pk-ph')].indexOf(el)]);
-  on('[data-zoom="ba"]', () => baIdx[[...document.querySelectorAll('.ba-scene')].findIndex(sc => sc.classList.contains('on'))]);
-  on('.fq-ph', () => fqIdx);
+  const on = (sel, fn) => document.querySelectorAll(sel).forEach(el => el.addEventListener('click', e => { e.preventDefault(); const [list, i] = fn(el); open(list, i); }));
+  on('.pr-photos', () => [prG[prOn()], 0]);
+  on('.pk-ph', el => [pkG[[...document.querySelectorAll('.pk-ph')].indexOf(el)], 0]);
+  on('[data-zoom="ba"]', () => [baG, baStart[[...document.querySelectorAll('.ba-scene')].findIndex(sc => sc.classList.contains('on'))]]);
+  on('.fq-ph', () => [fqG, 0]);
 })();
 </script>
 </body>

@@ -47,6 +47,7 @@ content:
           - { name: title, label: "Проблема (заголовок)", type: string, required: true }
           - { name: desc, label: "Проблема (опис)", type: text }
           - { name: photo, component: photo }
+          - { name: gallery, label: "Фото робіт (галерея)", type: image, description: "Кілька фото ваших робіт для цієї послуги. Їх гортають, коли натиснуть на фото картки. Головне фото — поле вище.", options: { media: photos, multiple: { max: 12 } } }
           - { name: pos, component: pos }
           - name: solution
             label: Послуга
@@ -70,6 +71,7 @@ content:
           - { name: price, label: "Ціна, грн", type: string, description: "Тільки число, наприклад 2 000. Порожньо — ціну не показуємо." }
           - { name: cta, label: "Текст кнопки", type: string, description: "Записатись або Дізнатись ціну" }
           - { name: photo, component: photo }
+          - { name: gallery, label: "Фото робіт (галерея)", type: image, description: "Кілька фото ваших робіт для цієї послуги. Їх гортають, коли натиснуть на фото картки. Головне фото — поле вище.", options: { media: photos, multiple: { max: 12 } } }
           - { name: pos, component: pos }
 
   # ---------- До / після ----------

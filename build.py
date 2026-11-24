@@ -68,6 +68,27 @@ def norm_photo(photo):
     return photo
 
 
+def gal_entry(photo):
+    """Фото з галереї послуги -> {src: велике, th: мініатюра} для data-gal."""
+    pid = norm_photo(photo)
+    if _unsplash(pid):
+        local = _local(pid, [480, 800, 1200, 1600], "webp")
+        if local:
+            return {"src": local[-1][1], "th": local[0][1]}
+        return None
+    if isinstance(pid, str) and pid:
+        path = pid.lstrip("/")
+        return {"src": path, "th": path} if (ROOT / path).exists() else None
+    return None
+
+
+def gal_json(photos):
+    if isinstance(photos, str):
+        photos = [photos]
+    items = [g for g in (gal_entry(x) for x in photos or []) if g]
+    return json.dumps(items, ensure_ascii=False) if items else ""
+
+
 NB_WORDS = r"(?:і|й|у|в|з|із|зі|та|а|до|за|на|не|ні|по|від|для|як|що|чи|бо|о|об)"
 
 
@@ -97,6 +118,7 @@ def from_cms(data):
                 walk(v)
     walk(data)
     for i, pr in enumerate(data.get("problems", [])):
+        pr["gal"] = gal_json(pr.get("gallery"))
         pr.setdefault("pos", "50% 50%")
         pr["title"], pr["desc"] = typo(pr.get("title", "")), typo(pr.get("desc", ""))
         sol = pr.setdefault("solution", {})
@@ -104,6 +126,7 @@ def from_cms(data):
             sol[k] = typo(sol.get(k, ""))
         sol["tip"] = typo(sol.get("tip", ""), "b")
     for pk in data.get("packages", []):
+        pk["gal"] = gal_json(pk.get("gallery"))
         pk.setdefault("pos", "50% 50%")
         pk["cta"] = pk.get("cta") or "Записатись"
         pk["goal"] = typo(pk.get("goal", ""))
