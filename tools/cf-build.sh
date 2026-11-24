@@ -14,7 +14,7 @@ python3 tools/optimize-uploads.py || echo "optimize-uploads впав — фот�
 python3 build.py clients/vndetail.json --out index.html
 
 rm -rf public && mkdir -p public
-cp index.html 404.html robots.txt sitemap.xml _headers public/
+cp index.html 404.html robots.txt sitemap.xml _headers _redirects public/
 cp -r fonts public/
 mkdir -p public/images && cp -r images/photos images/brand images/before-after public/images/
 [ -d images/uploads ] && cp -r images/uploads public/images/

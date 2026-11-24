@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vndetailing.pages.dev/sitemap.xml
+Sitemap: https://vndetail.com/sitemap.xml
