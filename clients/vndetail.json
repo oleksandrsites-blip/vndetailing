@@ -219,24 +219,31 @@
   ],
   "results": [
     {
-      "kind": "lights",
       "label": "Відновлення фар",
-      "pos": "50% 50%",
-      "mpos": "50% 50%",
+      "before_img": "images/before-after/vn-lights/before.webp",
+      "after_img": "images/before-after/vn-lights/after.webp",
       "before": "Мутний пожовклий пластик, світло розсіюється.",
       "after": "Прозорі фари й свіжий вигляд передньої частини авто.",
-      "before_img": "images/before-after/vn-lights/before.webp",
-      "after_img": "images/before-after/vn-lights/after.webp"
+      "kind": "lights",
+      "pos": "50% 50%",
+      "mpos": "50% 50%"
     },
     {
-      "kind": "engine",
       "label": "Мийка двигуна",
-      "pos": "50% 50%",
-      "mpos": "50% 50%",
+      "before_img": "images/before-after/vn-engine/before.webp",
+      "after_img": "images/before-after/vn-engine/after.webp",
       "before": "Пил і бруд на двигуні та в моторному відсіку.",
       "after": "Чистий двигун і охайний вигляд під капотом.",
-      "before_img": "images/before-after/vn-engine/before.webp",
-      "after_img": "images/before-after/vn-engine/after.webp"
+      "kind": "engine",
+      "pos": "50% 50%",
+      "mpos": "50% 50%"
+    },
+    {
+      "label": "Антихром",
+      "before_img": "/images/uploads/photo2026-11-24-105836.jpeg",
+      "after_img": "/images/uploads/photo2026-11-24-105842.jpeg",
+      "before": "Молдинги навколо вікон - хром.",
+      "after": "Молдинги навколо вікон обклеїні в чорний глянець."
     }
   ],
   "steps": [
