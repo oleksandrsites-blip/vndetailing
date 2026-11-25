@@ -159,6 +159,13 @@ def from_cms(data):
     tg = c.get("telegram")
     if isinstance(tg, dict) and tg.get("url"):
         tg["handle"] = "@" + tg["url"].rstrip("/").rsplit("/", 1)[-1]
+    vb = c.get("viber")
+    if isinstance(vb, dict):
+        d = re.sub(r"\D", "", vb.get("phone") or "")
+        if len(d) >= 10:
+            vb["url"] = "viber://chat?number=%2B38" + d[-10:]
+        else:
+            c.pop("viber")  # порожній номер — рядок Viber не показуємо
     return data
 
 
@@ -379,7 +386,7 @@ def _jsonld(data):
         "address": {"@type": "PostalAddress", "addressLocality": data.get("city", "Рівне"), "addressCountry": "UA", **({"streetAddress": c["street"]} if c.get("street") else {})},
         "areaServed": data.get("city", "Рівне"),
         "openingHoursSpecification": hours,
-        "sameAs": [v["url"] for k, v in c.items() if k != "map" and isinstance(v, dict) and v.get("url")] + [m["url"] for m in c.get("more", [])],
+        "sameAs": [v["url"] for k, v in c.items() if k != "map" and isinstance(v, dict) and str(v.get("url", "")).startswith("http")] + [m["url"] for m in c.get("more", [])],
     }
     if prices:
         biz["priceRange"] = f"{min(prices)}–{max(prices)} грн"

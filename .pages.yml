@@ -167,6 +167,11 @@ content:
             fields:
               - { name: url, label: "Посилання", type: string, description: "https://t.me/..." }
               - { name: handle, type: string, hidden: true }
+          - name: viber
+            label: Viber
+            type: object
+            fields:
+              - { name: phone, label: "Номер Viber", type: string, description: "Наприклад: 068 550 33 44. Порожньо — рядок Viber на сайті не показуємо." }
           - name: instagram
             label: Instagram
             type: object
