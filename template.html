@@ -1002,6 +1002,10 @@
   .ft-row a{transition:color .2s}
   .ft-row a:hover{color:var(--white)}
   .ft-note{margin-top:8px;font-size:13px;line-height:1.5;color:#9C9C98;text-align:center}
+  .ft-credit{margin-top:6px;font-size:13px;line-height:1.5;color:#9C9C98;text-align:center}
+  .ft-credit a{color:#D6D6D2;font-weight:500;border-bottom:1px solid rgba(243,243,241,.25);transition:color .2s, border-color .2s}
+  .ft-credit a:hover{border-color:var(--white)}
+  .ft-credit a:hover{color:var(--white)}
   .ft-mark{
     display:block;margin-top:clamp(28px, calc(var(--vh, 1svh) * 5), 56px);
     font-size:clamp(64px, 17.4vw, 300px);font-weight:800;letter-spacing:-.065em;line-height:.8;
@@ -1473,7 +1477,8 @@
   </div>
   <span class="ft-mark" aria-hidden="true">{{brand}}</span>
 {{#footer.note}}  <p class="ft-note">{{footer.note}}</p>
-{{/footer.note}}</footer>
+{{/footer.note}}  <p class="ft-credit">Розробка та дизайн — <a href="https://www.instagram.com/oleks_web/" target="_blank" rel="noopener">@oleks_web</a></p>
+</footer>
 
 <script>
 /* легкий паралакс фото за курсором (тільки мишка, тільки десктоп) */
